@@ -33,6 +33,13 @@ npm test         # the tests, against dist/ - build first
 npm run check    # build + test, what CI runs
 ```
 
+## The family
+
+This page is one of a family of abap2UI5 sites, each built from its own
+repository. What they share is `CONVENTION.md`: the top line, the colours,
+the type, the tile and the foot. It is copied into each site, never
+imported; a change to it starts here.
+
 ## Rules
 
 - **A greeting and four groups.** The `<h1>` says "Welcome to abap2UI5" and

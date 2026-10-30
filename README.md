@@ -19,3 +19,6 @@ npm run check    # build + test, what CI runs
 
 Adding a tool, an addon or a channel is one line in the `groups` array of
 `src/pages/index.astro`. See `AGENTS.md` for the rules.
+
+The look every abap2UI5 site shares - the top line, the colours, the type,
+the tile - is written down in [CONVENTION.md](CONVENTION.md).
