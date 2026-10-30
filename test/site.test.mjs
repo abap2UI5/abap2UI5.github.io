@@ -1,7 +1,8 @@
 // What the built page must keep, read off dist/ after `npm run build`.
 // node:test, no browser: the page is static HTML, so the properties worth
-// holding are in the file - the five groups, the policy, no script, nothing
-// that points at a file that is not there, and every tile leaving the page.
+// holding are in the file - the greeting and the five groups, the policy, no
+// script, nothing that points at a file that is not there, and every tile
+// leaving the page.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -10,11 +11,12 @@ import path from "node:path";
 const DIST = path.join(import.meta.dirname, "..", "dist");
 const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 
-test("the five groups are the addresses the header links to", () => {
+test("the page is the greeting and the five groups", () => {
+  assert.match(html, /<h1 class="welcome">[\s\S]*Welcome to abap2UI5/);
   for (const id of ["introduction", "tools-browser", "tools-development", "addons", "community"]) {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
-    assert.match(html, new RegExp(`href="#${id}"`), `the header links #${id}`);
   }
+  assert.doesNotMatch(html, /<header|class="hero"|<nav/, "no header, no hero, no navigation");
 });
 
 test("the page runs no script, and its policy says so", () => {
@@ -58,7 +60,7 @@ test("the canonical address is the published one", () => {
 
 test("the page is a signpost, not a manual", () => {
   // a reader scans it: the visible text outside the code sample stays short
-  const open = html.replace(/<head>[\s\S]*?<\/head>/, "").replace(/<pre[\s\S]*?<\/pre>/g, "").replace(/<[^>]+>/g, " ");
+  const open = html.replace(/<head>[\s\S]*?<\/head>/, "").replace(/<[^>]+>/g, " ");
   const words = open.trim().split(/\s+/).length;
-  assert.ok(words <= 700, `${words} words on the page`);
+  assert.ok(words <= 500, `${words} words on the page`);
 });

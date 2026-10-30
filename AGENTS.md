@@ -13,8 +13,7 @@ nothing in it depends on another repository at build time.
 | Path | Purpose |
 | --- | --- |
 | `src/pages/index.astro` | The page: the five groups and their tiles as data at the top, the markup below |
-| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the header with the group links, the foot |
-| `src/components/Icon.astro` | The inline marks of the tiles |
+| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the one-line foot |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
@@ -36,13 +35,14 @@ npm run check    # build + test, what CI runs
 
 ## Rules
 
-- **Five groups, five ids.** `introduction`, `tools-browser`,
-  `tools-development`, `addons`, `community` - the header links them and the
-  test names them. Reword a heading freely; keep the `id`.
+- **A greeting and five groups.** The `<h1>` says "Welcome to abap2UI5" and
+  nothing else introduces the page. The ids `introduction`, `tools-browser`,
+  `tools-development`, `addons`, `community` are what the test names and
+  what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
   array of `src/pages/index.astro`; the markup below renders whatever is
-  there. Each tile carries `where` - the site or repository it opens - so a
-  reader knows where they land. The browser group is for what runs without an
+  there. A tile is a title and one short line, nothing more - no icon, no
+  badge, no address line. The browser group is for what runs without an
   installation; the development group for what goes into an editor, a
   pipeline or an agent; add-ons are what abapGit installs next to the
   framework.
@@ -55,7 +55,7 @@ npm run check    # build + test, what CI runs
 - **Nothing from another origin.** No CDN, no web font service, no analytics;
   the font and the images are in `public/`.
 - **Short.** The page is scanned, not read: one sentence per tile, the visible
-  text stays under 700 words (the test holds it). What needs a paragraph is a
+  text stays under 500 words (the test holds it). What needs a paragraph is a
   link into the docs or the why-site.
 - **Toolchain:** Node 22 (`.nvmrc`, `engines`), every dependency pinned
   exactly (astro 7.3.8), actions pinned to commits. Deployment needs
