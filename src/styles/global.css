@@ -71,7 +71,7 @@ img { max-width: 100%; height: auto; }
 .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
 .tiles li { min-width: 0; }
 .tile {
-  display: grid; gap: 4px; height: 100%;
+  display: grid; gap: 4px; align-content: start; height: 100%;
   padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card);
   color: var(--text); text-decoration: none;
   transition: border-color .15s, box-shadow .15s;
