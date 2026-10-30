@@ -1,14 +1,16 @@
 ---
-/* The entry page: a greeting, then the places a reader can go, in five
+/* The entry page: a greeting, then the places a reader can go, in four
  * groups. Every tile leaves the page - this page explains nothing that the
  * docs, the why-site or a repository's README explains; it only points there.
  *
  * The tiles are data, so a new tool or add-on is one line here. A tile
  * marked `planned` has no address yet: the channel does not exist today and
- * the tile says so instead of linking into nothing. */
+ * the tile says so instead of linking into nothing. A tile marked `more` is
+ * not one of the group's items but the way to all of them, and looks it. */
 import Page from "../layouts/Page.astro";
+import { MARKS } from "../components/marks";
 
-type Tile = { href: string; title: string; text: string; planned?: boolean };
+type Tile = { href: string; title: string; text: string; planned?: boolean; more?: boolean; mark?: keyof typeof MARKS; for?: string };
 type Group = { id: string; title: string; tiles: Tile[] };
 
 const groups: Group[] = [
@@ -16,32 +18,20 @@ const groups: Group[] = [
     id: "introduction",
     title: "Introduction",
     tiles: [
-      { href: "https://abap2ui5.github.io/why/", title: "Why abap2UI5", text: "What it builds, who runs it, where it fits and where it does not, what it costs." },
-      { href: "https://abap2ui5.github.io/docs/", title: "Documentation", text: "Getting started, tutorial, cookbook, configuration, integration, the client API." },
+      { href: "https://abap2ui5.github.io/why/", for: "For managers & decision makers", title: "Why abap2UI5", text: "What it builds, who runs it, where it fits and where it does not, what it costs." },
+      { href: "https://abap2ui5.github.io/docs/", for: "For developers & architects", title: "Documentation", text: "Getting started, tutorial, cookbook, configuration, integration, the client API." },
       { href: "https://abap2ui5.github.io/docs/get_started/quickstart.html", title: "Quickstart", text: "Install with abapGit, create the HTTP service, run your first class." },
     ],
   },
   {
-    id: "tools-browser",
-    title: "Tools · browser based",
+    id: "tools",
+    title: "Tools",
     tiles: [
       { href: "https://abap2ui5.github.io/playground/", title: "Playground", text: "ABAP in the editor, the running app next to it. No server involved." },
       { href: "https://abap2ui5.github.io/playground/samples/", title: "Samples", text: "Searchable by control and UI5 release, most of them one click from running in the browser." },
       { href: "https://abap2ui5.github.io/playground/ai/", title: "AI Studio", text: "Describe an app, watch the class being written and fixed, download it for abapGit." },
       { href: "https://abap2ui5.github.io/layout-editor/", title: "Layout Editor", text: "Design a UI5 view by drag and drop, export one ABAP class." },
       { href: "https://abap2ui5-addons.github.io/abap-cloud-gui/#playground", title: "Report converter", text: "Paste a classic report, get a report class that runs on ABAP Cloud." },
-    ],
-  },
-  {
-    id: "tools-development",
-    title: "Tools · development process",
-    tiles: [
-      { href: "https://abap2ui5.github.io/docs/advanced/linter.html", title: "Linter", text: "Static and headless-render checks over an app class and its view, without an SAP system." },
-      { href: "https://github.com/abap2UI5/vscode-extension", title: "VS Code Extension", text: "Lints while you type, runs a class against a real system, registers the MCP servers." },
-      { href: "https://github.com/abap2UI5/mcp-server", title: "MCP Server", text: "An agent searches the samples, validates, deploys, runs and screenshots an app." },
-      { href: "https://github.com/abap2UI5/app-template", title: "App Template", text: "Starter repository for an app project: example app, linting and CI preconfigured." },
-      { href: "https://github.com/abap2UI5/headless-frontend", title: "Headless Frontend", text: "Drive and test apps from ABAP. No browser, no UI5, no HTTP." },
-      { href: "https://github.com/abap2UI5/embed-control", title: "Embed Control", text: "Run an app inside your own UI5 app, Fiori elements page or Work Zone card." },
     ],
   },
   {
@@ -54,19 +44,18 @@ const groups: Group[] = [
       { href: "https://abap2ui5-addons.github.io/sql-console/", title: "SQL Console", text: "Run SQL in the browser." },
       { href: "https://abap2ui5-addons.github.io/sapgui/", title: "SAP GUI in the browser", text: "Classic transactions rebuilt as abap2UI5 apps, with se16n and table maintenance beside it." },
       { href: "https://abap2ui5-addons.github.io/admin-cockpit/", title: "Admin Cockpit", text: "Usage, errors, performance and a security traffic light for your installation." },
-      { href: "https://abap2ui5-addons.github.io/", title: "All add-ons", text: "The overview of every add-on, with a page for each." },
+      { href: "https://abap2ui5-addons.github.io/", title: "All add-ons", text: "The overview of every add-on, with a page for each.", more: true },
     ],
   },
   {
     id: "community",
     title: "Community",
     tiles: [
-      { href: "https://github.com/abap2UI5", title: "GitHub", text: "Source, issues and pull requests. Two organizations, the framework and the add-ons." },
-      { href: "https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email", title: "Slack", text: "The abap2UI5 channel in the abapGit workspace. The fastest answer." },
-      { href: "https://www.linkedin.com/company/abap2ui5", title: "LinkedIn", text: "Releases, blog posts, community highlights." },
-      { href: "https://community.sap.com/", title: "SAP Community", text: "Blog posts and questions on community.sap.com.", planned: true },
-      { href: "https://bsky.app/", title: "Bluesky", text: "Short updates and release announcements.", planned: true },
-      { href: "mailto:contact@abap2UI5.org", title: "Contact", text: "contact@abap2UI5.org. Commercial support on request." },
+      { href: "https://github.com/abap2UI5", mark: "github", title: "GitHub", text: "Source, issues and pull requests. Two organizations, the framework and the add-ons." },
+      { href: "https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email", mark: "slack", title: "Slack", text: "The abap2UI5 channel in the abapGit workspace. The fastest answer." },
+      { href: "https://www.linkedin.com/company/abap2ui5", mark: "linkedin", title: "LinkedIn", text: "Releases, blog posts, community highlights." },
+      { href: "https://community.sap.com/", mark: "community", title: "SAP Community", text: "Blog posts and questions on community.sap.com.", planned: true },
+      { href: "https://bsky.app/", mark: "bluesky", title: "Bluesky", text: "Short updates and release announcements.", planned: true },
     ],
   },
 ];
@@ -83,8 +72,9 @@ const base = import.meta.env.BASE_URL;
       <ul class="tiles">
         {g.tiles.map((t) => (
           <li>
-            <a class:list={["tile", { planned: t.planned }]} href={t.href}>
-              <strong>{t.title}{t.planned && <span class="tag">coming</span>}</strong>
+            <a class:list={["tile", { planned: t.planned, more: t.more }]} href={t.href}>
+              {t.for && <span class="for">{t.for}</span>}
+              <strong>{t.mark && <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" set:html={MARKS[t.mark]} />}{t.title}{t.planned && <span class="tag">coming</span>}</strong>
               <span class="text">{t.text}</span>
             </a>
           </li>

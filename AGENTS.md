@@ -12,7 +12,7 @@ nothing in it depends on another repository at build time.
 
 | Path | Purpose |
 | --- | --- |
-| `src/pages/index.astro` | The page: the five groups and their tiles as data at the top, the markup below |
+| `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
 | `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (GitHub), the one-line foot |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
 | `public/` | Font (Inter, self-hosted), logo, icons |
@@ -35,19 +35,20 @@ npm run check    # build + test, what CI runs
 
 ## Rules
 
-- **A greeting and five groups.** The `<h1>` says "Welcome to abap2UI5" and
-  nothing else introduces the page. The ids `introduction`, `tools-browser`,
-  `tools-development`, `addons`, `community` are what the test names and
+- **A greeting and four groups.** The `<h1>` says "Welcome to abap2UI5" and
+  nothing else introduces the page. The ids `introduction`, `tools`, `addons`,
+  `community` are what the test names and
   what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
   array of `src/pages/index.astro`; the markup below renders whatever is
-  there. A tile is a title and one short line, nothing more - no icon, no
-  badge, no address line. The browser group is for what runs without an
-  installation; the development group for what goes into an editor, a
-  pipeline or an agent; add-ons are what abapGit installs next to the
-  framework.
-- **Every tile leaves the page.** The test holds every tile to `https://` or
-  `mailto:`, and to the project's own places. A channel that does not exist
+  there. A tile is a title and one short line, nothing more - no badge, no
+  address line. Only the community tiles carry the mark of their platform
+  (`src/components/marks.ts`). The tools group is for what runs in the browser without an
+  installation; add-ons are what abapGit installs next to the framework.
+  Developer tooling (linter, VS Code extension, MCP server) is reached
+  through the documentation, not from here.
+- **Every tile leaves the page.** The test holds every tile to `https://` and
+  to the project's own places. A channel that does not exist
   yet is marked `planned`: the tile stays, is drawn dashed and says "coming",
   and gets its address when the channel does. Never point a tile into nothing.
 - **No script.** The policy is `script-src 'self'` and the page ships none:

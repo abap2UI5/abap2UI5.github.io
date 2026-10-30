@@ -1,6 +1,6 @@
 // What the built page must keep, read off dist/ after `npm run build`.
 // node:test, no browser: the page is static HTML, so the properties worth
-// holding are in the file - the greeting and the five groups, the policy, no
+// holding are in the file - the greeting and the four groups, the policy, no
 // script, nothing that points at a file that is not there, and every tile
 // leaving the page.
 import { test } from "node:test";
@@ -11,9 +11,9 @@ import path from "node:path";
 const DIST = path.join(import.meta.dirname, "..", "dist");
 const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 
-test("the page is the greeting and the five groups", () => {
+test("the page is the greeting and the four groups", () => {
   assert.match(html, /<h1 class="welcome">[\s\S]*Welcome to abap2UI5/);
-  for (const id of ["introduction", "tools-browser", "tools-development", "addons", "community"]) {
+  for (const id of ["introduction", "tools", "addons", "community"]) {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
   }
   assert.doesNotMatch(html, /<header|class="hero"|<nav/, "no header, no hero, no navigation");
@@ -48,9 +48,9 @@ test("everything the page loads is in dist/", () => {
 
 test("every tile leaves the page, to a site of the project or a channel of the community", () => {
   const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
-  assert.ok(tiles.length >= 20, `${tiles.length} tiles`);
-  for (const href of tiles) assert.match(href, /^(https:\/\/|mailto:)/, `${href} stays on the page`);
-  const hosts = ["abap2ui5.github.io", "abap2ui5-addons.github.io", "github.com/abap2UI5", "abapgit.slack.com", "linkedin.com/company/abap2ui5", "community.sap.com", "bsky.app", "mailto:"];
+  assert.ok(tiles.length >= 18, `${tiles.length} tiles`);
+  for (const href of tiles) assert.match(href, /^https:\/\//, `${href} stays on the page`);
+  const hosts = ["abap2ui5.github.io", "abap2ui5-addons.github.io", "github.com/abap2UI5", "abapgit.slack.com", "linkedin.com/company/abap2ui5", "community.sap.com", "bsky.app"];
   for (const href of tiles) assert.ok(hosts.some((h) => href.includes(h)), `${href} is not one of the project's places`);
 });
 
