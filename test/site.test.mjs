@@ -49,6 +49,8 @@ test("everything the page loads is in dist/", () => {
 
 test("every tile leaves the page, to a site of the project or a channel of the community", () => {
   const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
+  const opened = [...html.matchAll(/<a class="tile[^"]*" href="[^"]+" target="_blank" rel="noopener"/g)].length;
+  assert.equal(opened, tiles.length, "every tile opens in a new tab");
   assert.ok(tiles.length >= 10, `${tiles.length} tiles`);
   for (const href of tiles) assert.match(href, /^https:\/\//, `${href} stays on the page`);
   const hosts = ["abap2ui5.github.io", "abap2ui5-addons.github.io", "github.com/abap2UI5", "abapgit.slack.com", "linkedin.com/company/abap2ui5", "community.sap.com", "bsky.app"];

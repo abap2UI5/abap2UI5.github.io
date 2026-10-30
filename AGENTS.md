@@ -48,8 +48,9 @@ npm run check    # build + test, what CI runs
   installation; the add-ons have a site of their own.
   Developer tooling (linter, VS Code extension, MCP server) is reached
   through the documentation, not from here.
-- **Every tile leaves the page.** The test holds every tile to `https://` and
-  to the project's own places. SAP Community and Bluesky have no abap2UI5
+- **Every tile leaves the page, in a new tab.** The test holds every tile to
+  `https://`, to the project's own places, and to `target="_blank"` with
+  `rel="noopener"`; the arrow in the corner says so (↗). SAP Community and Bluesky have no abap2UI5
   channel yet; their tiles lead to the platform until there is one. Never
   point a tile into nothing.
 - **No script.** The policy is `script-src 'self'` and the page ships none:
