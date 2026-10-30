@@ -1,17 +1,15 @@
 ---
-/* The document around the page: head, the header, the foot.
+/* The document around the page: head and a one-line foot. No header - the
+ * page is a greeting and the tiles, nothing to navigate.
  *
  * THE POLICY. GitHub Pages sets no headers of ours, so the Content-Security-
  * Policy is a <meta>. The page runs no script at all - script-src is 'self',
  * no inline script, no handler attribute - and everything it loads is this
- * origin too. test/site.test.mjs holds the page to it.
- *
- * THE HEADER. One row: the mark, the groups of the page as anchors, GitHub
- * and the playground on the right. No script anywhere. */
+ * origin too. test/site.test.mjs holds the page to it. */
 import "../styles/global.css";
 
-interface Props { title: string; description: string; sections: [string, string][] }
-const { title, description, sections } = Astro.props;
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const CSP = [
@@ -24,8 +22,6 @@ const CSP = [
   "base-uri 'self'",
   "form-action 'none'",
 ].join("; ");
-// the build date, so a reader knows how old the page is
-const updated = new Date().toISOString().slice(0, 10);
 ---
 <!doctype html>
 <html lang="en">
@@ -47,34 +43,12 @@ const updated = new Date().toISOString().slice(0, 10);
 <link rel="preload" href={`${base}fonts/inter-roman-latin.woff2`} as="font" type="font/woff2" crossorigin>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="top">
-  <div class="wrap">
-    <a class="mark" href={base}><img src={`${base}logo.png`} alt="" width="28" height="28"> abap2UI5</a>
-    <nav class="nav" aria-label="Sections">
-      {sections.map(([id, text]) => <a href={`#${id}`}>{text}</a>)}
-    </nav>
-    <div class="top-actions">
-      <a class="icon-btn" href="https://github.com/abap2UI5/abap2UI5" aria-label="abap2UI5 on GitHub" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.2.1-2.6 0 0 .8-.3 2.8 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.6.7.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a>
-      <a class="icon-btn" href="https://www.linkedin.com/company/abap2ui5" aria-label="abap2UI5 on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zm7 0h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21h-4z"/></svg></a>
-      <a class="btn btn-primary" href="https://abap2ui5.github.io/playground/">Try it out</a>
-    </div>
-  </div>
-</header>
 <main id="main">
   <slot />
 </main>
 <footer class="foot">
   <div class="wrap">
-    <span>abap2UI5 · MIT licensed · built in the open · page updated <time datetime={updated}>{updated}</time> · <a href="mailto:contact@abap2UI5.org">contact@abap2UI5.org</a></span>
-    <nav aria-label="More">
-      <a href="https://github.com/abap2UI5/abap2UI5/releases">Releases</a>
-      <a href="https://abap2ui5.github.io/docs/resources/sponsor.html">Sponsor</a>
-      <a href="https://github.com/abap2UI5/abap2UI5/blob/main/SECURITY.md">Security</a>
-      <a href="https://github.com/cap2UI5/cap2UI5">cap2UI5</a>
-      <a href="https://github.com/abap-util/abap-util">abap-util</a>
-      <a href="https://github.com/abap2UI5/abap2UI5.github.io">Edit this page</a>
-    </nav>
+    <span>abap2UI5 · MIT licensed · <a href="mailto:contact@abap2UI5.org">contact@abap2UI5.org</a> · <a href="https://github.com/abap2UI5/abap2UI5.github.io">Edit this page</a></span>
   </div>
 </footer>
 </body>
