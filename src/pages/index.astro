@@ -5,13 +5,12 @@
  *
  * The tiles are data, so a new tool or add-on is one line here. SAP Community and Bluesky
  * have no abap2UI5 channel yet; their tiles lead to the platform until
- * there is one. An entry marked `more` is
- * not one of the group's items but the way to all of them: it is rendered
- * as a small link under the tiles, not as a tile. */
+ * there is one. The add-ons group is one tile:
+ * the add-ons live on their own site, abap2ui5-addons.github.io. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
-type Tile = { href: string; title: string; text: string; more?: boolean; mark?: keyof typeof MARKS; for?: string };
+type Tile = { href: string; title: string; text: string; mark?: keyof typeof MARKS; for?: string };
 type Group = { id: string; title: string; tiles: Tile[] };
 
 const groups: Group[] = [
@@ -49,13 +48,7 @@ const groups: Group[] = [
     id: "addons",
     title: "Add-ons",
     tiles: [
-      { href: "https://abap2ui5-addons.github.io/abap-cloud-gui/", title: "abap-cloud-gui", text: "Selection screens, WRITE lists, ALV grids and report events, on ABAP Cloud and 7.02." },
-      { href: "https://abap2ui5-addons.github.io/rfc-connector/", title: "RFC Connector", text: "Run abap2UI5 apps from a remote system via RFC. An HTTP variant exists too." },
-      { href: "https://abap2ui5-addons.github.io/launchpad-kpi/", title: "Launchpad KPI", text: "KPIs of abap2UI5 apps as tiles on the Fiori Launchpad." },
-      { href: "https://abap2ui5-addons.github.io/sql-console/", title: "SQL Console", text: "Run SQL in the browser." },
-      { href: "https://abap2ui5-addons.github.io/sapgui/", title: "SAP GUI in the browser", text: "Classic transactions rebuilt as abap2UI5 apps, with se16n and table maintenance beside it." },
-      { href: "https://abap2ui5-addons.github.io/admin-cockpit/", title: "Admin Cockpit", text: "Usage, errors, performance and a security traffic light for your installation." },
-      { href: "https://abap2ui5-addons.github.io/", title: "More add-ons", text: "", more: true },
+      { href: "https://abap2ui5-addons.github.io/", title: "More", text: "Every add-on of abap2UI5, with a page for each: classic ABAP on the web, connectors, app infrastructure, custom controls and the developer tools." },
     ],
   },
 ];
@@ -70,7 +63,7 @@ const base = import.meta.env.BASE_URL;
     <section class="group" id={g.id}>
       <h2>{g.title}</h2>
       <ul class="tiles">
-        {g.tiles.filter((t) => !t.more).map((t) => (
+        {g.tiles.map((t) => (
           <li>
             <a class="tile" href={t.href}>
               {t.for && <span class="for">{t.for}</span>}
@@ -80,7 +73,6 @@ const base = import.meta.env.BASE_URL;
           </li>
         ))}
       </ul>
-      {g.tiles.filter((t) => t.more).map((t) => <a class="more" href={t.href}>{t.title} →</a>)}
     </section>
   ))}
 </div>
