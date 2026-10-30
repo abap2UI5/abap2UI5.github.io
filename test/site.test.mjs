@@ -1,6 +1,6 @@
 // What the built page must keep, read off dist/ after `npm run build`.
 // node:test, no browser: the page is static HTML, so the properties worth
-// holding are in the file - the greeting and the three groups, the policy, no
+// holding are in the file - the greeting and the four groups, the policy, no
 // script, nothing that points at a file that is not there, and every tile
 // leaving the page.
 import { test } from "node:test";
@@ -11,13 +11,13 @@ import path from "node:path";
 const DIST = path.join(import.meta.dirname, "..", "dist");
 const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 
-test("the page is the greeting and the three groups", () => {
+test("the page is the greeting and the four groups", () => {
   assert.match(html, /<h1 class="welcome">[\s\S]*Welcome to abap2UI5/);
-  for (const id of ["introduction", "tools", "community"]) {
+  for (const id of ["introduction", "try-it", "more", "community"]) {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
   }
   assert.doesNotMatch(html, /<header|class="hero"|<nav class="nav"/, "no header, no hero, no section navigation");
-  assert.match(html, /<nav class="sites"[\s\S]*aria-current="page">Home<\/a>[\s\S]*href="https:\/\/abap2ui5-addons\.github\.io\/">Add-ons<\/a>/, "the top line names both sites, Home current");
+  assert.match(html, /<nav class="sites"[\s\S]*aria-current="page">Home<\/a>[\s\S]*href="https:\/\/abap2ui5-addons\.github\.io\/">Add-ons &amp; Tools<\/a>/, "the top line names both sites, Home current");
 });
 
 test("the page runs no script, and its policy says so", () => {
