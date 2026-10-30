@@ -48,9 +48,9 @@ npm run check    # build + test, what CI runs
   Developer tooling (linter, VS Code extension, MCP server) is reached
   through the documentation, not from here.
 - **Every tile leaves the page.** The test holds every tile to `https://` and
-  to the project's own places. A channel that does not exist
-  yet is marked `planned`: the tile stays, is drawn dashed and says "coming",
-  and gets its address when the channel does. Never point a tile into nothing.
+  to the project's own places. SAP Community and Bluesky have no abap2UI5
+  channel yet; their tiles lead to the platform until there is one. Never
+  point a tile into nothing.
 - **No script.** The policy is `script-src 'self'` and the page ships none:
   no inline script, no `on…=` handler, no inline `style=""`.
 - **Nothing from another origin.** No CDN, no web font service, no analytics;
