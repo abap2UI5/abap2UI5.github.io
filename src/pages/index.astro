@@ -12,7 +12,7 @@
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
-type Tile = { href: string; title: string; text: string; mark?: keyof typeof MARKS; for?: string };
+type Tile = { href: string; title: string; text?: string; mark?: keyof typeof MARKS; for?: string };
 type Group = { id: string; title: string; tiles: Tile[] };
 
 const groups: Group[] = [
@@ -28,22 +28,22 @@ const groups: Group[] = [
     id: "tools",
     title: "Tools",
     tiles: [
-      { href: "https://abap2ui5.github.io/playground/", mark: "playground", title: "Playground", text: "ABAP in the editor, the running app next to it. No server needed." },
-      { href: "https://abap2ui5.github.io/playground/samples/", mark: "samples", title: "Samples", text: "Over 700 ready-to-run apps, by control and UI5 release." },
-      { href: "https://abap2ui5.github.io/playground/ai/", mark: "ai", title: "AI Studio", text: "Describe an app, watch it being written, download it for abapGit." },
-      { href: "https://abap2ui5.github.io/layout-editor/", mark: "layout", title: "Layout Editor", text: "Design a UI5 view by drag and drop, export one ABAP class." },
-      { href: "https://abap2ui5-addons.github.io/abap-cloud-gui/#playground", mark: "convert", title: "Report converter", text: "Paste a classic report, get a class that runs on ABAP Cloud." },
+      { href: "https://abap2ui5.github.io/playground/", title: "Playground", text: "ABAP in the editor, the running app next to it. No server needed." },
+      { href: "https://abap2ui5.github.io/playground/samples/", title: "Samples", text: "Over 700 ready-to-run apps, by control and UI5 release." },
+      { href: "https://abap2ui5.github.io/playground/ai/", title: "AI Studio", text: "Describe an app, watch it being written, download it for abapGit." },
+      { href: "https://abap2ui5.github.io/layout-editor/", title: "Layout Editor", text: "Design a UI5 view by drag and drop, export one ABAP class." },
+      { href: "https://abap2ui5-addons.github.io/abap-cloud-gui/#playground", title: "Report converter", text: "Paste a classic report, get a class that runs on ABAP Cloud." },
     ],
   },
   {
     id: "community",
     title: "Community",
     tiles: [
-      { href: "https://github.com/abap2UI5", mark: "github", title: "GitHub", text: "Source, issues and pull requests of the framework and add-ons." },
-      { href: "https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email", mark: "slack", title: "Slack", text: "The abap2UI5 channel in the abapGit workspace. Fastest answer." },
-      { href: "https://www.linkedin.com/company/abap2ui5", mark: "linkedin", title: "LinkedIn", text: "Releases, blog posts, community highlights." },
-      { href: "https://community.sap.com/", mark: "community", title: "SAP Community", text: "Blog posts and questions on community.sap.com." },
-      { href: "https://bsky.app/", mark: "bluesky", title: "Bluesky", text: "Short updates and release announcements." },
+      { href: "https://github.com/abap2UI5", mark: "github", title: "GitHub" },
+      { href: "https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email", mark: "slack", title: "Slack" },
+      { href: "https://www.linkedin.com/company/abap2ui5", mark: "linkedin", title: "LinkedIn" },
+      { href: "https://community.sap.com/", mark: "community", title: "SAP Community" },
+      { href: "https://bsky.app/", mark: "bluesky", title: "Bluesky" },
     ],
   },
 ];
@@ -54,7 +54,16 @@ const base = import.meta.env.BASE_URL;
 <div class="wrap">
   <h1 class="welcome"><img src={`${base}logo.png`} alt="" width="40" height="40"> Welcome to abap2UI5</h1>
 
-  {groups.map((g) => (
+  {groups.map((g) => g.id === "community" ? (
+    <section class="group" id={g.id}>
+      <h2>{g.title}</h2>
+      <ul class="links">
+        {g.tiles.map((t) => (
+          <li><a href={t.href} target="_blank" rel="noopener">{t.mark && <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" set:html={MARKS[t.mark]} />}{t.title}</a></li>
+        ))}
+      </ul>
+    </section>
+  ) : (
     <section class="group" id={g.id}>
       <h2>{g.title}</h2>
       <ul class="tiles">
@@ -62,7 +71,7 @@ const base = import.meta.env.BASE_URL;
           <li>
             <a class="tile" href={t.href} target="_blank" rel="noopener">
               {t.for && <span class="for">{t.for}</span>}
-              <strong>{t.mark && <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" set:html={MARKS[t.mark]} />}{t.title}</strong>
+              <strong>{t.title}</strong>
               <span class="text">{t.text}</span>
             </a>
           </li>
