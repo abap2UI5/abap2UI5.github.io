@@ -3,14 +3,15 @@
  * groups. Every tile leaves the page - this page explains nothing that the
  * docs, the why-site or a repository's README explains; it only points there.
  *
- * The tiles are data, so a new tool or add-on is one line here. A tile
- * marked `planned` has no address yet: the channel does not exist today and
- * the tile says so instead of linking into nothing. A tile marked `more` is
- * not one of the group's items but the way to all of them, and looks it. */
+ * The tiles are data, so a new tool or add-on is one line here. SAP Community and Bluesky
+ * have no abap2UI5 channel yet; their tiles lead to the platform until
+ * there is one. A tile marked `more` is
+ * not one of the group's items but the way to all of them, and stays in the
+ * background: no fill, no shadow, muted. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
-type Tile = { href: string; title: string; text: string; planned?: boolean; more?: boolean; mark?: keyof typeof MARKS; for?: string };
+type Tile = { href: string; title: string; text: string; more?: boolean; mark?: keyof typeof MARKS; for?: string };
 type Group = { id: string; title: string; tiles: Tile[] };
 
 const groups: Group[] = [
@@ -44,7 +45,7 @@ const groups: Group[] = [
       { href: "https://abap2ui5-addons.github.io/sql-console/", title: "SQL Console", text: "Run SQL in the browser." },
       { href: "https://abap2ui5-addons.github.io/sapgui/", title: "SAP GUI in the browser", text: "Classic transactions rebuilt as abap2UI5 apps, with se16n and table maintenance beside it." },
       { href: "https://abap2ui5-addons.github.io/admin-cockpit/", title: "Admin Cockpit", text: "Usage, errors, performance and a security traffic light for your installation." },
-      { href: "https://abap2ui5-addons.github.io/", title: "All add-ons", text: "The overview of every add-on, with a page for each.", more: true },
+      { href: "https://abap2ui5-addons.github.io/", title: "More", text: "Every add-on, with a page for each.", more: true },
     ],
   },
   {
@@ -54,8 +55,8 @@ const groups: Group[] = [
       { href: "https://github.com/abap2UI5", mark: "github", title: "GitHub", text: "Source, issues and pull requests. Two organizations, the framework and the add-ons." },
       { href: "https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email", mark: "slack", title: "Slack", text: "The abap2UI5 channel in the abapGit workspace. The fastest answer." },
       { href: "https://www.linkedin.com/company/abap2ui5", mark: "linkedin", title: "LinkedIn", text: "Releases, blog posts, community highlights." },
-      { href: "https://community.sap.com/", mark: "community", title: "SAP Community", text: "Blog posts and questions on community.sap.com.", planned: true },
-      { href: "https://bsky.app/", mark: "bluesky", title: "Bluesky", text: "Short updates and release announcements.", planned: true },
+      { href: "https://community.sap.com/", mark: "community", title: "SAP Community", text: "Blog posts and questions on community.sap.com." },
+      { href: "https://bsky.app/", mark: "bluesky", title: "Bluesky", text: "Short updates and release announcements." },
     ],
   },
 ];
@@ -72,9 +73,9 @@ const base = import.meta.env.BASE_URL;
       <ul class="tiles">
         {g.tiles.map((t) => (
           <li>
-            <a class:list={["tile", { planned: t.planned, more: t.more }]} href={t.href}>
+            <a class:list={["tile", { more: t.more }]} href={t.href}>
               {t.for && <span class="for">{t.for}</span>}
-              <strong>{t.mark && <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" set:html={MARKS[t.mark]} />}{t.title}{t.planned && <span class="tag">coming</span>}</strong>
+              <strong>{t.mark && <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" set:html={MARKS[t.mark]} />}{t.title}</strong>
               <span class="text">{t.text}</span>
             </a>
           </li>
