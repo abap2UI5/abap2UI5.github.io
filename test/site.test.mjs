@@ -1,0 +1,64 @@
+// What the built page must keep, read off dist/ after `npm run build`.
+// node:test, no browser: the page is static HTML, so the properties worth
+// holding are in the file - the five groups, the policy, no script, nothing
+// that points at a file that is not there, and every tile leaving the page.
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+
+const DIST = path.join(import.meta.dirname, "..", "dist");
+const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+
+test("the five groups are the addresses the header links to", () => {
+  for (const id of ["introduction", "tools-browser", "tools-development", "addons", "community"]) {
+    assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
+    assert.match(html, new RegExp(`href="#${id}"`), `the header links #${id}`);
+  }
+});
+
+test("the page runs no script, and its policy says so", () => {
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
+  assert.equal(scripts.length, 0, "no <script>");
+  assert.doesNotMatch(html, /\son[a-z]+=/i, "an inline event handler");
+  assert.doesNotMatch(html, /\sstyle="/i, "an inline style the policy would refuse");
+  const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/);
+  assert.ok(csp, "a Content-Security-Policy meta");
+  assert.match(csp[1], /script-src 'self'(;|$)/);
+  assert.match(csp[1], /default-src 'self'/);
+});
+
+test("everything the page loads is in dist/", () => {
+  const refs = [...html.matchAll(/\s(?:src|href)="([^"#]+)"/g)].map((m) => m[1]).filter((u) => u.startsWith("/"));
+  assert.ok(refs.length >= 4, "the stylesheet, the logo, the icons, the font");
+  for (const ref of refs) {
+    const file = path.join(DIST, ref.slice(1) || "index.html");
+    const target = fs.existsSync(file) && fs.statSync(file).isDirectory() ? path.join(file, "index.html") : file;
+    assert.ok(fs.existsSync(target), `${ref} is not in dist/`);
+  }
+  // the font the stylesheet declares
+  const css = fs.readFileSync(path.join(DIST, refs.find((r) => r.endsWith(".css")).slice(1)), "utf8");
+  for (const m of css.matchAll(/url\("(\/[^"]+)"\)/g)) assert.ok(fs.existsSync(path.join(DIST, m[1].slice(1))), `${m[1]} is not in dist/`);
+  // nothing from a CDN: the policy would refuse it anyway
+  for (const m of html.matchAll(/\s(?:src)="(https?:[^"]+)"/g)) assert.fail(`loads ${m[1]}`);
+  assert.doesNotMatch(html, /rel="stylesheet" href="https?:/);
+});
+
+test("every tile leaves the page, to a site of the project or a channel of the community", () => {
+  const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
+  assert.ok(tiles.length >= 20, `${tiles.length} tiles`);
+  for (const href of tiles) assert.match(href, /^(https:\/\/|mailto:)/, `${href} stays on the page`);
+  const hosts = ["abap2ui5.github.io", "abap2ui5-addons.github.io", "github.com/abap2UI5", "abapgit.slack.com", "linkedin.com/company/abap2ui5", "community.sap.com", "bsky.app", "mailto:"];
+  for (const href of tiles) assert.ok(hosts.some((h) => href.includes(h)), `${href} is not one of the project's places`);
+});
+
+test("the canonical address is the published one", () => {
+  assert.match(html, /<link rel="canonical" href="https:\/\/abap2ui5\.github\.io\/">/);
+});
+
+test("the page is a signpost, not a manual", () => {
+  // a reader scans it: the visible text outside the code sample stays short
+  const open = html.replace(/<head>[\s\S]*?<\/head>/, "").replace(/<pre[\s\S]*?<\/pre>/g, "").replace(/<[^>]+>/g, " ");
+  const words = open.trim().split(/\s+/).length;
+  assert.ok(words <= 700, `${words} words on the page`);
+});
