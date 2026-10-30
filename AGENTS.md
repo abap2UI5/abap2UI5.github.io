@@ -3,7 +3,7 @@
 The entry page of abap2UI5: one static page at the root of
 https://abap2ui5.github.io/ that points at everything the project publishes -
 the documentation, the why-site, the browser tools, the development tools, the
-add-ons and the community channels. A signpost, not a manual: it explains
+addons and the community channels. A signpost, not a manual: it explains
 nothing that another site explains, every tile leaves the page. Built the way
 abap2UI5/why is built (Astro, no script, nothing from another origin), and
 nothing in it depends on another repository at build time.
@@ -13,7 +13,7 @@ nothing in it depends on another repository at build time.
 | Path | Purpose |
 | --- | --- |
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
-| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the wordmark, Home and Add-ons & Tools as tabs), the one-line foot |
+| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the wordmark, Home and Addons & Tools as tabs), the one-line foot |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
@@ -42,13 +42,13 @@ npm run check    # build + test, what CI runs
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
   array of `src/pages/index.astro`; the markup below renders whatever is
   there. A tile is a title and one short line, nothing more - no badge, no
-  address line. The add-ons and the developer tools are not on this page: they
+  address line. The addons and the developer tools are not on this page: they
   live on their own site, reached by the one tile under "More" and the
-  "Add-ons & Tools" tab of the top line. Only the community carries marks
+  "Addons & Tools" tab of the top line. Only the community carries marks
   (`src/components/marks.ts`), and it is a row of small tiles with a mark and a name, no text. A tile
   at rest is a border, no shadow, no icon; the arrow shows on hover. The line under a title is two lines at most:
   write it short (about 70 characters); the stylesheet cuts anything longer. "Try it online" is for what runs in the browser without an
-  installation; the add-ons have a site of their own.
+  installation; the addons have a site of their own.
   Developer tooling (linter, VS Code extension, MCP server) is reached
   through the documentation, not from here.
 - **Every tile leaves the page, in a new tab.** The test holds every tile to
