@@ -93,7 +93,7 @@ img { max-width: 100%; height: auto; }
 .tile .mark { width: 20px; height: 20px; margin-right: 9px; vertical-align: -4px; color: var(--muted); }
 /* who a tile is for, above its title */
 .tile .for { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
-.tile .text { font-size: 14px; line-height: 1.5; color: var(--muted); }
+.tile .text { font-size: 14px; line-height: 1.5; color: var(--muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .tile, .tile::after { transition: none; } .tile:hover { transform: none; } }
 
 /* ---- the foot ----------------------------------------------------------- */

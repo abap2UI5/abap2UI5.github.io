@@ -43,8 +43,9 @@ npm run check    # build + test, what CI runs
   array of `src/pages/index.astro`; the markup below renders whatever is
   there. A tile is a title and one short line, nothing more - no badge, no
   address line. The add-ons are not on this page: they live on their own site,
-  the "Add-ons" tab of the top line. Only the community tiles carry the mark of their platform
-  (`src/components/marks.ts`). The tools group is for what runs in the browser without an
+  the "Add-ons" tab of the top line. The tool and community tiles carry a mark
+  (`src/components/marks.ts`). The line under a title is two lines at most:
+  write it short (about 70 characters); the stylesheet cuts anything longer. The tools group is for what runs in the browser without an
   installation; the add-ons have a site of their own.
   Developer tooling (linter, VS Code extension, MCP server) is reached
   through the documentation, not from here.
