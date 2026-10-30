@@ -13,7 +13,7 @@ const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 
 test("the page is the greeting and the three groups", () => {
   assert.match(html, /<h1 class="welcome">[\s\S]*Welcome to abap2UI5/);
-  for (const id of ["introduction", "tools", "community"]) {
+  for (const id of ["introduction", "try-it", "community"]) {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
   }
   assert.doesNotMatch(html, /<header|class="hero"|<nav class="nav"/, "no header, no hero, no section navigation");

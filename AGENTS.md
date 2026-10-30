@@ -36,7 +36,7 @@ npm run check    # build + test, what CI runs
 ## Rules
 
 - **A greeting and three groups.** The `<h1>` says "Welcome to abap2UI5" and
-  nothing else introduces the page. The ids `introduction`, `tools`, `community`
+  nothing else introduces the page. The ids `introduction`, `try-it`, `community`
   are what the test names and
   what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
@@ -44,9 +44,9 @@ npm run check    # build + test, what CI runs
   there. A tile is a title and one short line, nothing more - no badge, no
   address line. The add-ons are not on this page: they live on their own site,
   the "Add-ons" tab of the top line. Only the community carries marks
-  (`src/components/marks.ts`), and it is a row of links, not tiles. A tile
+  (`src/components/marks.ts`), and it is a row of small tiles with a mark and a name, no text. A tile
   at rest is a border, no shadow, no icon; the arrow shows on hover. The line under a title is two lines at most:
-  write it short (about 70 characters); the stylesheet cuts anything longer. The tools group is for what runs in the browser without an
+  write it short (about 70 characters); the stylesheet cuts anything longer. "Try it online" is for what runs in the browser without an
   installation; the add-ons have a site of their own.
   Developer tooling (linter, VS Code extension, MCP server) is reached
   through the documentation, not from here.
