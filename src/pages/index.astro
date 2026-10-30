@@ -5,9 +5,9 @@
  *
  * The tiles are data, so a new tool or add-on is one line here. SAP Community and Bluesky
  * have no abap2UI5 channel yet; their tiles lead to the platform until
- * there is one. A tile marked `more` is
- * not one of the group's items but the way to all of them, and stays in the
- * background: no fill, no shadow, muted. */
+ * there is one. An entry marked `more` is
+ * not one of the group's items but the way to all of them: it is rendered
+ * as a small link under the tiles, not as a tile. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
@@ -44,7 +44,7 @@ const groups: Group[] = [
       { href: "https://abap2ui5-addons.github.io/sql-console/", title: "SQL Console", text: "Run SQL in the browser." },
       { href: "https://abap2ui5-addons.github.io/sapgui/", title: "SAP GUI in the browser", text: "Classic transactions rebuilt as abap2UI5 apps, with se16n and table maintenance beside it." },
       { href: "https://abap2ui5-addons.github.io/admin-cockpit/", title: "Admin Cockpit", text: "Usage, errors, performance and a security traffic light for your installation." },
-      { href: "https://abap2ui5-addons.github.io/", title: "More", text: "Every add-on, with a page for each.", more: true },
+      { href: "https://abap2ui5-addons.github.io/", title: "More add-ons", text: "", more: true },
     ],
   },
   {
@@ -70,9 +70,9 @@ const base = import.meta.env.BASE_URL;
     <section class="group" id={g.id}>
       <h2>{g.title}</h2>
       <ul class="tiles">
-        {g.tiles.map((t) => (
+        {g.tiles.filter((t) => !t.more).map((t) => (
           <li>
-            <a class:list={["tile", { more: t.more }]} href={t.href}>
+            <a class="tile" href={t.href}>
               {t.for && <span class="for">{t.for}</span>}
               <strong>{t.mark && <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" set:html={MARKS[t.mark]} />}{t.title}</strong>
               <span class="text">{t.text}</span>
@@ -80,6 +80,7 @@ const base = import.meta.env.BASE_URL;
           </li>
         ))}
       </ul>
+      {g.tiles.filter((t) => t.more).map((t) => <a class="more" href={t.href}>{t.title} →</a>)}
     </section>
   ))}
 </div>

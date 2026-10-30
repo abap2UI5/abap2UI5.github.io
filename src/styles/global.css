@@ -92,13 +92,9 @@ img { max-width: 100%; height: auto; }
 /* who a tile is for, above its title */
 .tile .for { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
 .tile .text { font-size: 14px; line-height: 1.5; color: var(--muted); }
-/* the way to all items of a group: quieter than the tiles - no fill, no
- * shadow, the title muted; it comes forward only on hover */
-.tile.more { background: transparent; box-shadow: none; }
-.tile.more strong { color: var(--muted); font-weight: 500; }
-.tile.more .text { opacity: .8; }
-.tile.more:hover { box-shadow: none; border-color: var(--brand); }
-.tile.more:hover strong { color: var(--brand); }
+/* the way to all items of a group: a small link under the tiles */
+.group .more { display: inline-block; margin-top: 12px; font-size: 14px; font-weight: 500; color: var(--brand); text-decoration: none; }
+.group .more:hover { text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) { .tile, .tile::after { transition: none; } .tile:hover { transform: none; } }
 
 /* ---- the foot ----------------------------------------------------------- */

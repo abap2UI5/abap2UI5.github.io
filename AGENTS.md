@@ -42,7 +42,8 @@ npm run check    # build + test, what CI runs
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
   array of `src/pages/index.astro`; the markup below renders whatever is
   there. A tile is a title and one short line, nothing more - no badge, no
-  address line. Only the community tiles carry the mark of their platform
+  address line. An entry marked `more` is a small link under the tiles, not
+  a tile. Only the community tiles carry the mark of their platform
   (`src/components/marks.ts`). The tools group is for what runs in the browser without an
   installation; add-ons are what abapGit installs next to the framework.
   Developer tooling (linter, VS Code extension, MCP server) is reached
