@@ -93,11 +93,13 @@ img { max-width: 100%; height: auto; }
 .tile .for { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
 .tile .text { font-size: 14px; line-height: 1.5; color: var(--muted); }
 .tag { display: inline-block; margin-left: 7px; padding: 1px 7px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); font-size: 11px; font-weight: 500; vertical-align: 2px; letter-spacing: 0; }
-/* the way to all items of a group: tinted, the title in the brand colour */
-.tile.more { background: var(--brand-soft); border-color: transparent; }
-.tile.more strong { color: var(--brand); }
-.tile.more::after { color: var(--brand); opacity: 1; }
-.tile.more:hover { border-color: var(--brand); }
+/* the way to all items of a group: quieter than the tiles - no fill, no
+ * shadow, the title muted; it comes forward only on hover */
+.tile.more { background: transparent; box-shadow: none; }
+.tile.more strong { color: var(--muted); font-weight: 500; }
+.tile.more .text { opacity: .8; }
+.tile.more:hover { box-shadow: none; border-color: var(--brand); }
+.tile.more:hover strong { color: var(--brand); }
 /* a channel that does not exist yet: the tile stays, says so, and is quiet */
 .tile.planned { border-style: dashed; background: transparent; }
 @media (prefers-reduced-motion: reduce) { .tile, .tile::after { transition: none; } .tile:hover { transform: none; } }

@@ -6,7 +6,8 @@
  * The tiles are data, so a new tool or add-on is one line here. A tile
  * marked `planned` has no address yet: the channel does not exist today and
  * the tile says so instead of linking into nothing. A tile marked `more` is
- * not one of the group's items but the way to all of them, and looks it. */
+ * not one of the group's items but the way to all of them, and stays in the
+ * background: no fill, no shadow, muted. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
@@ -44,7 +45,7 @@ const groups: Group[] = [
       { href: "https://abap2ui5-addons.github.io/sql-console/", title: "SQL Console", text: "Run SQL in the browser." },
       { href: "https://abap2ui5-addons.github.io/sapgui/", title: "SAP GUI in the browser", text: "Classic transactions rebuilt as abap2UI5 apps, with se16n and table maintenance beside it." },
       { href: "https://abap2ui5-addons.github.io/admin-cockpit/", title: "Admin Cockpit", text: "Usage, errors, performance and a security traffic light for your installation." },
-      { href: "https://abap2ui5-addons.github.io/", title: "All add-ons", text: "The overview of every add-on, with a page for each.", more: true },
+      { href: "https://abap2ui5-addons.github.io/", title: "More", text: "Every add-on, with a page for each.", more: true },
     ],
   },
   {
