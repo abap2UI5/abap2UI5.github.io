@@ -13,7 +13,7 @@ nothing in it depends on another repository at build time.
 | Path | Purpose |
 | --- | --- |
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
-| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the wordmark, Home and Addons & Tools as tabs), the one-line foot |
+| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the one-line foot |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
@@ -33,6 +33,23 @@ npm test         # the tests, against dist/ - build first
 npm run check    # build + test, what CI runs
 ```
 
+## The family
+
+This page is the hub of a family of sites - the documentation, the samples,
+the playground, the addons, the why-site - and every one of them is built
+and deployed from its own repository, with nothing shared at build time.
+What they share is a convention, copied into each:
+
+- **Top left, the logo and the site's name**, "abap2UI5 / Documentation":
+  the logo and the word lead here, the name says where the reader is. This
+  page is the home, so it carries no top line; its greeting is the mark.
+- **No bar that lists the other sites.** From one tool to another the way
+  is this page, two clicks. Links between sites sit in the content where
+  they belong (a Run button into the playground, a sample to its chapter).
+- **The palette, the type, the tile** of `src/styles/global.css`: the brand
+  red, the ink, the greys, Inter, the 12px radius. Copy the values, never
+  import the file from another repository.
+
 ## Rules
 
 - **A greeting and four groups.** The `<h1>` says "Welcome to abap2UI5" and
@@ -43,8 +60,7 @@ npm run check    # build + test, what CI runs
   array of `src/pages/index.astro`; the markup below renders whatever is
   there. A tile is a title and one short line, nothing more - no badge, no
   address line. The addons and the developer tools are not on this page: they
-  live on their own site, reached by the one tile under "More" and the
-  "Addons & Tools" tab of the top line. Only the community carries marks
+  live on their own site, reached by the one tile under "More". Only the community carries marks
   (`src/components/marks.ts`), and it is a row of small tiles with a mark and a name, no text. A tile
   at rest is a border and a quiet ↗, no shadow, no icon. The line under a title is two lines at most:
   write it short (about 70 characters); the stylesheet cuts anything longer. "Try it online" is for what runs in the browser without an

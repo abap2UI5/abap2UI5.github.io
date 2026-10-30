@@ -1,9 +1,8 @@
 ---
-/* The document around the page: head, a top line, a one-line foot. No
- * header - the page is a greeting and the tiles. The top line is the one
- * thing the two sites share: the wordmark and the two sites as tabs with
- * the current one marked. abap2UI5-addons.github.io has
- * the same line with the other tab current.
+/* The document around the page: head, a one-line foot. No header, no top
+ * line - this page is the home every other site's logo leads back to, and
+ * the greeting with the logo is its mark. The other sites carry the logo and
+ * their name top left (see AGENTS.md, "The family").
  *
  * THE POLICY. GitHub Pages sets no headers of ours, so the Content-Security-
  * Policy is a <meta>. The page runs no script at all - script-src is 'self',
@@ -46,13 +45,6 @@ const CSP = [
 <link rel="preload" href={`${base}fonts/inter-roman-latin.woff2`} as="font" type="font/woff2" crossorigin>
 </head>
 <body>
-<div class="topline wrap">
-  <nav class="sites" aria-label="Sites">
-    <a class="brand" href={base}>abap2UI5</a>
-    <a href={base} aria-current="page">Home</a>
-    <a href="https://abap2ui5-addons.github.io/">Addons &amp; Tools</a>
-  </nav>
-</div>
 <main id="main">
   <slot />
 </main>
