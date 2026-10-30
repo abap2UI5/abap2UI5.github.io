@@ -1,6 +1,7 @@
 ---
-/* The document around the page: head and a one-line foot. No header - the
- * page is a greeting and the tiles, nothing to navigate.
+/* The document around the page: head, a top line with one link, a one-line
+ * foot. No header - the page is a greeting and the tiles, nothing to
+ * navigate. The top line is the same on abap2UI5-addons.github.io.
  *
  * THE POLICY. GitHub Pages sets no headers of ours, so the Content-Security-
  * Policy is a <meta>. The page runs no script at all - script-src is 'self',
@@ -43,6 +44,7 @@ const CSP = [
 <link rel="preload" href={`${base}fonts/inter-roman-latin.woff2`} as="font" type="font/woff2" crossorigin>
 </head>
 <body>
+<p class="topline wrap"><a href="https://github.com/abap2UI5">GitHub</a></p>
 <main id="main">
   <slot />
 </main>
