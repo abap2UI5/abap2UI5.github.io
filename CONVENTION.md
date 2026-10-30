@@ -52,6 +52,11 @@ button, the hover of a tile. Nothing else is coloured.
 | line | `#e2e6ec` | `#273042` | borders and rules |
 | background | `#ffffff` | `#0f1522` | the page |
 
+**Binding: the accent, in both themes.** The red fails AA in dark as it is
+(3.62:1), so dark takes the lifted value; every pairing in the table clears
+AA. **Reference: the greys.** A site with greys of its own, tuned to its
+layout, may keep them as long as they stay neutral and close to these.
+
 Light and dark follow the reader's system. A site with a switch of its own
 keeps the choice under its own storage key.
 
