@@ -51,7 +51,12 @@ test("every tile leaves the page, to a site of the project or a channel of the c
   const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
   const opened = [...html.matchAll(/<a class="tile[^"]*" href="[^"]+" target="_blank" rel="noopener"/g)].length;
   assert.equal(opened, tiles.length, "every tile opens in a new tab");
-  assert.ok(tiles.length >= 10, `${tiles.length} tiles`);
+  const row = html.match(/<ul class="links">([\s\S]*?)<\/ul>/);
+  assert.ok(row, "the community is a row of links");
+  const links = [...row[1].matchAll(/<a href="([^"]+)" target="_blank" rel="noopener"/g)].map((m) => m[1]);
+  assert.equal(links.length, 5, "five community links, each in a new tab");
+  tiles.push(...links);
+  assert.ok(tiles.length >= 12, `${tiles.length} tiles and links`);
   for (const href of tiles) assert.match(href, /^https:\/\//, `${href} stays on the page`);
   const hosts = ["abap2ui5.github.io", "abap2ui5-addons.github.io", "github.com/abap2UI5", "abapgit.slack.com", "linkedin.com/company/abap2ui5", "community.sap.com", "bsky.app"];
   for (const href of tiles) assert.ok(hosts.some((h) => href.includes(h)), `${href} is not one of the project's places`);
