@@ -17,7 +17,7 @@ test("the page is the greeting and the four groups", () => {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
   }
   assert.doesNotMatch(html, /<header|class="hero"|<nav class="nav"/, "no header, no hero, no section navigation");
-  assert.match(html, /<nav class="sites"[\s\S]*aria-current="page">Home<\/a>[\s\S]*href="https:\/\/abap2ui5-addons\.github\.io\/">Add-ons &amp; Tools<\/a>/, "the top line names both sites, Home current");
+  assert.match(html, /<nav class="sites"[\s\S]*aria-current="page">Home<\/a>[\s\S]*href="https:\/\/abap2ui5-addons\.github\.io\/">Addons &amp; Tools<\/a>/, "the top line names both sites, Home current");
 });
 
 test("the page runs no script, and its policy says so", () => {
@@ -49,8 +49,10 @@ test("everything the page loads is in dist/", () => {
 
 test("every tile leaves the page, to a site of the project or a channel of the community", () => {
   const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
-  const opened = [...html.matchAll(/<a class="tile[^"]*" href="[^"]+" target="_blank" rel="noopener"/g)].length;
-  assert.equal(opened, tiles.length, "every tile opens in a new tab");
+  const opened = [...html.matchAll(/<a class="tile" href="[^"]+" target="_blank" rel="noopener"/g)].length;
+  const inside = [...html.matchAll(/<a class="tile inside" href="(https:\/\/abap2ui5-addons\.github\.io\/)">/g)].length;
+  assert.equal(inside, 1, "one tile leads to the sister site, in the same tab");
+  assert.equal(opened + inside, tiles.length, "every other tile opens in a new tab");
   const row = html.match(/<ul class="links">([\s\S]*?)<\/ul>/);
   assert.ok(row, "the community is a row of links");
   const links = [...row[1].matchAll(/<a href="([^"]+)" target="_blank" rel="noopener"/g)].map((m) => m[1]);

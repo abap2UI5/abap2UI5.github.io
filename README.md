@@ -2,7 +2,7 @@
 
 The entry page of abap2UI5 at <https://abap2ui5.github.io/>: one page that
 points at everything - the documentation and the why-site, the browser tools,
-the development tools, the add-ons and the community channels.
+the development tools, the addons and the community channels.
 
 The sites it points at are built in their own repositories:
 
@@ -17,5 +17,5 @@ npm run dev      # http://localhost:4321/
 npm run check    # build + test, what CI runs
 ```
 
-Adding a tool, an add-on or a channel is one line in the `groups` array of
+Adding a tool, an addon or a channel is one line in the `groups` array of
 `src/pages/index.astro`. See `AGENTS.md` for the rules.

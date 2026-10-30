@@ -3,16 +3,18 @@
  * groups. Every tile leaves the page - this page explains nothing that the
  * docs, the why-site or a repository's README explains; it only points there.
  *
- * The tiles are data, so a new tool or add-on is one line here. SAP Community and Bluesky
+ * The tiles are data, so a new tool or addon is one line here. SAP Community and Bluesky
  * have no abap2UI5 channel yet; their tiles lead to the platform until
- * there is one. Every tile opens in a new tab: the
- * page is a signpost and stays open. The add-ons and the developer
+ * there is one. Every tile opens in a new tab - the
+ * page is a signpost and stays open - except the one marked `inside`, which
+ * leads to the sister site, the second tab of the top line: it opens in the
+ * same tab and carries a straight arrow. The addons and the developer
  * tools live on their own site, abap2ui5-addons.github.io: the "More" tile
  * and the second tab of the top line lead there. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
-type Tile = { href: string; title: string; text?: string; mark?: keyof typeof MARKS; for?: string };
+type Tile = { href: string; title: string; text?: string; mark?: keyof typeof MARKS; for?: string; inside?: boolean };
 type Group = { id: string; title: string; tiles: Tile[] };
 
 const groups: Group[] = [
@@ -39,7 +41,7 @@ const groups: Group[] = [
     id: "more",
     title: "More",
     tiles: [
-      { href: "https://abap2ui5-addons.github.io/", title: "Add-ons & Tools", text: "Add-ons for your system, tools for your editor and pipeline, each with a page." },
+      { href: "https://abap2ui5-addons.github.io/", title: "Addons & Tools", text: "Addons for your system, tools for your editor and pipeline, each with a page.", inside: true },
     ],
   },
   {
@@ -56,7 +58,7 @@ const groups: Group[] = [
 ];
 const base = import.meta.env.BASE_URL;
 ---
-<Page title="abap2UI5" description="Welcome to abap2UI5: the documentation, the playground and the browser tools, the development tools, the add-ons and where the community meets." >
+<Page title="abap2UI5" description="Welcome to abap2UI5: the documentation, the playground and the browser tools, the development tools, the addons and where the community meets." >
 
 <div class="wrap">
   <h1 class="welcome"><img src={`${base}logo.png`} alt="" width="40" height="40"> Welcome to abap2UI5</h1>
@@ -76,7 +78,7 @@ const base = import.meta.env.BASE_URL;
       <ul class="tiles">
         {g.tiles.map((t) => (
           <li>
-            <a class="tile" href={t.href} target="_blank" rel="noopener">
+            <a class:list={["tile", { inside: t.inside }]} href={t.href} target={t.inside ? undefined : "_blank"} rel={t.inside ? undefined : "noopener"}>
               {t.for && <span class="for">{t.for}</span>}
               <strong>{t.title}</strong>
               <span class="text">{t.text}</span>
