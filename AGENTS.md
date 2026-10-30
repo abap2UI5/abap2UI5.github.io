@@ -46,14 +46,15 @@ npm run check    # build + test, what CI runs
   live on their own site, reached by the one tile under "More" and the
   "Addons & Tools" tab of the top line. Only the community carries marks
   (`src/components/marks.ts`), and it is a row of small tiles with a mark and a name, no text. A tile
-  at rest is a border, no shadow, no icon; the arrow shows on hover. The line under a title is two lines at most:
+  at rest is a border and a quiet ↗, no shadow, no icon. The line under a title is two lines at most:
   write it short (about 70 characters); the stylesheet cuts anything longer. "Try it online" is for what runs in the browser without an
   installation; the addons have a site of their own.
   Developer tooling (linter, VS Code extension, MCP server) is reached
   through the documentation, not from here.
 - **Every tile leaves the page, in a new tab.** The test holds every tile to
   `https://`, to the project's own places, and to `target="_blank"` with
-  `rel="noopener"`; the arrow in the corner says so (↗). SAP Community and Bluesky have no abap2UI5
+  `rel="noopener"`; the arrow in the corner says so (↗). The one exception
+  is the tile to the sister site (`inside`): same tab, straight arrow (→). SAP Community and Bluesky have no abap2UI5
   channel yet; their tiles lead to the platform until there is one. Never
   point a tile into nothing.
 - **No script.** The policy is `script-src 'self'` and the page ships none:
