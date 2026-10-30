@@ -16,7 +16,8 @@ test("the page is the greeting and the four groups", () => {
   for (const id of ["introduction", "tools", "addons", "community"]) {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
   }
-  assert.doesNotMatch(html, /<header|class="hero"|<nav/, "no header, no hero, no navigation");
+  assert.doesNotMatch(html, /<header|class="hero"|<nav class="nav"/, "no header, no hero, no section navigation");
+  assert.match(html, /<nav class="sites"[\s\S]*aria-current="page">Home<\/a>[\s\S]*href="https:\/\/abap2ui5-addons\.github\.io\/">Add-ons<\/a>/, "the top line names both sites, Home current");
 });
 
 test("the page runs no script, and its policy says so", () => {
