@@ -56,10 +56,13 @@ img { max-width: 100%; height: auto; }
 .wrap { max-width: var(--width); margin: 0 auto; padding: 0 24px; }
 @media (max-width: 620px) { .wrap { padding: 0 16px; } }
 
-/* ---- the top line: links on the right, nothing else ---------------------- */
-.topline { display: flex; align-items: center; justify-content: flex-end; gap: 18px; margin: 0 auto; padding-top: 18px; font-size: 13.5px; }
+/* ---- the top line: the wordmark, the two sites as tabs, GitHub ----------- */
+.topline { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 0 auto; padding-top: 18px; font-size: 13.5px; }
 .topline a { color: var(--muted); text-decoration: none; font-weight: 500; }
 .topline a:hover { color: var(--brand); }
+.sites { display: flex; align-items: center; gap: 16px; }
+.sites .brand { color: var(--ink); font-weight: 700; letter-spacing: -.01em; margin-right: 6px; }
+.sites a[aria-current="page"] { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--brand); padding-bottom: 1px; }
 .topline .gh { width: 20px; height: 20px; display: block; }
 
 /* ---- the greeting -------------------------------------------------------- */
@@ -92,13 +95,6 @@ img { max-width: 100%; height: auto; }
 /* who a tile is for, above its title */
 .tile .for { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
 .tile .text { font-size: 14px; line-height: 1.5; color: var(--muted); }
-/* the way to all items of a group: quieter than the tiles - no fill, no
- * shadow, the title muted; it comes forward only on hover */
-.tile.more { background: transparent; box-shadow: none; }
-.tile.more strong { color: var(--muted); font-weight: 500; }
-.tile.more .text { opacity: .8; }
-.tile.more:hover { box-shadow: none; border-color: var(--brand); }
-.tile.more:hover strong { color: var(--brand); }
 @media (prefers-reduced-motion: reduce) { .tile, .tile::after { transition: none; } .tile:hover { transform: none; } }
 
 /* ---- the foot ----------------------------------------------------------- */

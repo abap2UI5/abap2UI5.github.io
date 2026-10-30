@@ -16,7 +16,8 @@ test("the page is the greeting and the four groups", () => {
   for (const id of ["introduction", "tools", "addons", "community"]) {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
   }
-  assert.doesNotMatch(html, /<header|class="hero"|<nav/, "no header, no hero, no navigation");
+  assert.doesNotMatch(html, /<header|class="hero"|<nav class="nav"/, "no header, no hero, no section navigation");
+  assert.match(html, /<nav class="sites"[\s\S]*aria-current="page">Home<\/a>[\s\S]*href="https:\/\/abap2ui5-addons\.github\.io\/">Add-ons<\/a>/, "the top line names both sites, Home current");
 });
 
 test("the page runs no script, and its policy says so", () => {
@@ -48,7 +49,7 @@ test("everything the page loads is in dist/", () => {
 
 test("every tile leaves the page, to a site of the project or a channel of the community", () => {
   const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
-  assert.ok(tiles.length >= 18, `${tiles.length} tiles`);
+  assert.ok(tiles.length >= 12, `${tiles.length} tiles`);
   for (const href of tiles) assert.match(href, /^https:\/\//, `${href} stays on the page`);
   const hosts = ["abap2ui5.github.io", "abap2ui5-addons.github.io", "github.com/abap2UI5", "abapgit.slack.com", "linkedin.com/company/abap2ui5", "community.sap.com", "bsky.app"];
   for (const href of tiles) assert.ok(hosts.some((h) => href.includes(h)), `${href} is not one of the project's places`);

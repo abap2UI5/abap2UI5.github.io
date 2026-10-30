@@ -13,7 +13,7 @@ nothing in it depends on another repository at build time.
 | Path | Purpose |
 | --- | --- |
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
-| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (GitHub), the one-line foot |
+| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the wordmark, Home and Add-ons as tabs, GitHub), the one-line foot |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
@@ -42,9 +42,10 @@ npm run check    # build + test, what CI runs
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
   array of `src/pages/index.astro`; the markup below renders whatever is
   there. A tile is a title and one short line, nothing more - no badge, no
-  address line. Only the community tiles carry the mark of their platform
+  address line. The add-ons group is one tile that leads to the add-ons site; the
+  add-ons themselves are listed there, not here. Only the community tiles carry the mark of their platform
   (`src/components/marks.ts`). The tools group is for what runs in the browser without an
-  installation; add-ons are what abapGit installs next to the framework.
+  installation; the add-ons have a site of their own.
   Developer tooling (linter, VS Code extension, MCP server) is reached
   through the documentation, not from here.
 - **Every tile leaves the page.** The test holds every tile to `https://` and

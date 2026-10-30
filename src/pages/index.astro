@@ -5,13 +5,12 @@
  *
  * The tiles are data, so a new tool or add-on is one line here. SAP Community and Bluesky
  * have no abap2UI5 channel yet; their tiles lead to the platform until
- * there is one. A tile marked `more` is
- * not one of the group's items but the way to all of them, and stays in the
- * background: no fill, no shadow, muted. */
+ * there is one. The add-ons group is one tile:
+ * the add-ons live on their own site, abap2ui5-addons.github.io. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
-type Tile = { href: string; title: string; text: string; more?: boolean; mark?: keyof typeof MARKS; for?: string };
+type Tile = { href: string; title: string; text: string; mark?: keyof typeof MARKS; for?: string };
 type Group = { id: string; title: string; tiles: Tile[] };
 
 const groups: Group[] = [
@@ -21,7 +20,6 @@ const groups: Group[] = [
     tiles: [
       { href: "https://abap2ui5.github.io/why/", for: "For decision makers", title: "What is abap2UI5?", text: "UI5 apps written entirely in ABAP: what that means for your team, your landscape and your budget, and where it fits." },
       { href: "https://abap2ui5.github.io/docs/", for: "For developers", title: "Technical Documentation", text: "How it works, how to install it and how to build apps: tutorial, cookbook, configuration, client API." },
-      { href: "https://abap2ui5.github.io/docs/get_started/quickstart.html", title: "Quickstart", text: "Install with abapGit, create the HTTP service, run your first class." },
     ],
   },
   {
@@ -36,19 +34,6 @@ const groups: Group[] = [
     ],
   },
   {
-    id: "addons",
-    title: "Add-ons",
-    tiles: [
-      { href: "https://abap2ui5-addons.github.io/abap-cloud-gui/", title: "abap-cloud-gui", text: "Selection screens, WRITE lists, ALV grids and report events, on ABAP Cloud and 7.02." },
-      { href: "https://abap2ui5-addons.github.io/rfc-connector/", title: "RFC Connector", text: "Run abap2UI5 apps from a remote system via RFC. An HTTP variant exists too." },
-      { href: "https://abap2ui5-addons.github.io/launchpad-kpi/", title: "Launchpad KPI", text: "KPIs of abap2UI5 apps as tiles on the Fiori Launchpad." },
-      { href: "https://abap2ui5-addons.github.io/sql-console/", title: "SQL Console", text: "Run SQL in the browser." },
-      { href: "https://abap2ui5-addons.github.io/sapgui/", title: "SAP GUI in the browser", text: "Classic transactions rebuilt as abap2UI5 apps, with se16n and table maintenance beside it." },
-      { href: "https://abap2ui5-addons.github.io/admin-cockpit/", title: "Admin Cockpit", text: "Usage, errors, performance and a security traffic light for your installation." },
-      { href: "https://abap2ui5-addons.github.io/", title: "More", text: "Every add-on, with a page for each.", more: true },
-    ],
-  },
-  {
     id: "community",
     title: "Community",
     tiles: [
@@ -57,6 +42,13 @@ const groups: Group[] = [
       { href: "https://www.linkedin.com/company/abap2ui5", mark: "linkedin", title: "LinkedIn", text: "Releases, blog posts, community highlights." },
       { href: "https://community.sap.com/", mark: "community", title: "SAP Community", text: "Blog posts and questions on community.sap.com." },
       { href: "https://bsky.app/", mark: "bluesky", title: "Bluesky", text: "Short updates and release announcements." },
+    ],
+  },
+  {
+    id: "addons",
+    title: "Add-ons",
+    tiles: [
+      { href: "https://abap2ui5-addons.github.io/", title: "More", text: "Every add-on of abap2UI5, with a page for each: classic ABAP on the web, connectors, app infrastructure, custom controls and the developer tools." },
     ],
   },
 ];
@@ -73,7 +65,7 @@ const base = import.meta.env.BASE_URL;
       <ul class="tiles">
         {g.tiles.map((t) => (
           <li>
-            <a class:list={["tile", { more: t.more }]} href={t.href}>
+            <a class="tile" href={t.href}>
               {t.for && <span class="for">{t.for}</span>}
               <strong>{t.mark && <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" set:html={MARKS[t.mark]} />}{t.title}</strong>
               <span class="text">{t.text}</span>
