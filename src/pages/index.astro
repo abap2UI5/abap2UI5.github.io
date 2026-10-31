@@ -7,7 +7,7 @@
  * have no abap2UI5 channel yet; their tiles lead to the platform until
  * there is one. Every tile opens in a new tab - the
  * page is a signpost and stays open - except the ones marked `inside`, which
- * lead to the two sister sites, Samples and Addons & Tools, whose top line
+ * lead to the sister sites, Samples, Insights and Addons & Tools, whose top line
  * leads back here by its Home tab: they open in the same tab and carry a
  * straight arrow. The addons and the developer
  * tools live on their own site, abap2ui5-addons.github.io: the "More" tile
@@ -43,6 +43,7 @@ const groups: Group[] = [
     title: "More",
     tiles: [
       { href: "https://abap2ui5.github.io/samples-site/", title: "Samples", text: "Hundreds of ready-to-run apps, by control and UI5 release.", inside: true },
+      { href: "https://abap2ui5.github.io/insights/", title: "Insights", text: "37 short essays on the idea: why, how it works, where it belongs.", inside: true },
       { href: "https://abap2ui5-addons.github.io/", title: "Addons & Tools", text: "Addons for your system, tools for your editor and pipeline, each with a page.", inside: true },
     ],
   },

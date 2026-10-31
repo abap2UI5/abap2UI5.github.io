@@ -19,7 +19,7 @@ nothing in it depends on another repository at build time.
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
 | `.github/workflows/pages.yml` | Build + test on every PR; deploy on main |
 
-The sites under `/docs/`, `/why/`, `/playground/` and `/layout-editor/` are
+The sites under `/docs/`, `/why/`, `/insights/`, `/playground/` and `/layout-editor/` are
 project sites of their own repositories; GitHub Pages serves them next to this
 page, nothing here builds or copies them.
 
@@ -60,7 +60,7 @@ imported; a change to it starts here.
 - **Every tile leaves the page, in a new tab.** The test holds every tile to
   `https://`, to the project's own places, and to `target="_blank"` with
   `rel="noopener"`; the arrow in the corner says so (↗). The two exceptions
-  are the tiles to the sister sites, Samples and Addons & Tools (`inside`): same tab, straight arrow (→); their top line leads back by its Home tab. SAP Community and Bluesky have no abap2UI5
+  are the tiles to the sister sites, Samples, Insights and Addons & Tools (`inside`): same tab, straight arrow (→); their top line leads back by its Home tab. SAP Community and Bluesky have no abap2UI5
   channel yet; their tiles lead to the platform until there is one. Never
   point a tile into nothing.
 - **No script.** The policy is `script-src 'self'` and the page ships none:
