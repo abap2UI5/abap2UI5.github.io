@@ -12,7 +12,7 @@ it changes here first, and each site follows in its own pull request.
 
 ## 1. The top line
 
-Top left, the logo and the word **abap2UI5**, linking to the home page. That
+Top left, the logo (22px, `alt=""`) and the word **abap2UI5**, linking to the home page - always both, on every site. That
 is the way between the sites: every site leads home, and the home page is
 the one place that lists them all - the two role tiles, Try it online, More,
 Community. **No site carries a row of the other sites.** A reader who wants
@@ -25,7 +25,7 @@ one marked - the ink colour, weight 600 and a 2px underline in the accent.
 ```html
 <div class="topline">
   <nav class="sites" aria-label="Sites">
-    <a class="brand" href="https://abap2ui5.github.io/">abap2UI5</a>
+    <a class="brand" href="https://abap2ui5.github.io/"><img src="logo.png" alt="" width="22" height="22"> abap2UI5</a>
     <a href="https://abap2ui5.github.io/" aria-current="page">Home</a>
     <a href="https://abap2ui5-addons.github.io/">Addons &amp; Tools</a>
   </nav>
