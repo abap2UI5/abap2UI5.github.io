@@ -1,7 +1,7 @@
 # The abap2UI5 family of sites
 
 Every abap2UI5 site - this home page, the documentation, the samples, the
-playground with the AI Studio, the addons, the why-site, the layout editor -
+playground with the AI App Builder, the addons, the why-site, the layout editor -
 is built and deployed from **its own repository, with nothing shared at build
 time and nothing shared in the browser's storage**. Between the sites there
 are links, and nothing else.
@@ -102,5 +102,7 @@ the accent border and a 3px glow in *accent soft*.
 
 ## 5. The foot
 
-One line, muted, at the bottom of the window however short the page:
-the name, the licence, the contact address and a link to edit the page.
+The home page has none: it ends with the community row. A sister site
+(Samples, Addons & Tools) carries one muted line at the bottom of the
+window however short the page: the name leading home, the licence, a link
+to edit the page and the mail as a mark at the right end.
