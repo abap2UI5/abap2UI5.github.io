@@ -12,8 +12,10 @@
  * origin too. test/site.test.mjs holds the page to it. */
 import "../styles/global.css";
 
-interface Props { title: string; description: string }
-const { title, description } = Astro.props;
+/* `trail`: a page of this site below Home, named in the top line as the
+ * breadcrumb the sister sites use: Home / About, only the last entry marked. */
+interface Props { title: string; description: string; trail?: string }
+const { title, description, trail } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const CSP = [
@@ -50,7 +52,8 @@ const CSP = [
 <div class="topline wrap">
   <nav class="sites" aria-label="Breadcrumb">
     <a class="brand" href={base}><img src={`${base}logo.png`} alt="" width="22" height="22"> abap2UI5</a>
-    <a href={base} aria-current="page">Home</a>
+    {trail ? <a href={base}>Home</a> : <span aria-current="page">Home</span>}
+    {trail && <><span class="sep" aria-hidden="true">/</span><span aria-current="page">{trail}</span></>}
   </nav>
 </div>
 <main id="main">

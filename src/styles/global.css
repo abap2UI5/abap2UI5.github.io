@@ -61,10 +61,12 @@ img { max-width: 100%; height: auto; }
 .topline { display: flex; align-items: center; justify-content: space-between; gap: 18px; width: 100%; margin: 0 auto; padding-top: 18px; font-size: 13.5px; }
 .topline a { color: var(--muted); text-decoration: none; font-weight: 500; }
 .topline a:hover { color: var(--brand); }
-.sites { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 16px; }
-.sites .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-weight: 700; letter-spacing: -.01em; margin-right: 6px; }
+.sites { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; }
+/* a breadcrumb: the ancestors are muted links, only the last entry - where the reader is - is marked */
+.sites .sep { color: var(--line); }
+.sites .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-weight: 700; letter-spacing: -.01em; margin-right: 8px; }
 .sites .brand img { width: 22px; height: 22px; }
-.sites a[aria-current="page"] { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--brand); padding-bottom: 1px; }
+.sites [aria-current="page"] { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--brand); padding-bottom: 1px; }
 
 /* ---- the greeting -------------------------------------------------------- */
 .welcome {
@@ -125,11 +127,8 @@ main { flex: 1 0 auto; padding-bottom: 32px; }
 .about a:hover { color: var(--brand); }
 
 /* ---- the About page: one column of prose ---- */
-.prose { max-width: 680px; padding-top: 24px; padding-bottom: 48px; }
-.crumb { margin: 0 0 20px; font-size: 13.5px; color: var(--muted); }
-.crumb a { color: var(--muted); text-decoration: none; }
-.crumb a:hover { color: var(--brand); }
-.crumb span { margin: 0 6px; color: var(--line); }
+.prose { padding-top: 28px; padding-bottom: 48px; }
+.prose > * { max-width: 680px; }
 .prose h1 { margin: 0 0 24px; font-size: 32px; letter-spacing: -.02em; }
 .prose h2 { margin: 28px 0 8px; font-size: 17px; }
 .prose p { margin: 0 0 12px; font-size: 15.5px; line-height: 1.6; color: var(--muted); }
