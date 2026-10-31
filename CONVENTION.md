@@ -1,7 +1,7 @@
 # The abap2UI5 family of sites
 
 Every abap2UI5 site - this home page, the documentation, the samples, the
-playground with the AI Studio, the addons, the why-site, the layout editor -
+playground with the AI App Builder, the addons, the why-site, the layout editor -
 is built and deployed from **its own repository, with nothing shared at build
 time and nothing shared in the browser's storage**. Between the sites there
 are links, and nothing else.
