@@ -20,9 +20,9 @@ another site goes home and picks it, or follows a link in the text.
 
 Beside the brand a site may name its own place as a tab, with the current
 one marked - the ink colour, weight 600 and a 2px underline in the accent:
-the home page says **Home**, the samples **Samples**, Addons & Tools
-**Home | Addons & Tools** (its way back). The home page reaches Addons &
-Tools by its More tile, not by a tab.
+the home page says **Home**; its two sister sites say **Home | Samples** and
+**Home | Addons & Tools** - the Home tab is their way back. The home page
+reaches them by a tile that opens in the same tab (→), not by a tab.
 
 ```html
 <div class="topline">
