@@ -6,9 +6,10 @@
  * The tiles are data, so a new tool or addon is one line here. SAP Community and Bluesky
  * have no abap2UI5 channel yet; their tiles lead to the platform until
  * there is one. Every tile opens in a new tab - the
- * page is a signpost and stays open - except the one marked `inside`, which
- * leads to the sister site, the second tab of the top line: it opens in the
- * same tab and carries a straight arrow. The addons and the developer
+ * page is a signpost and stays open - except the ones marked `inside`, which
+ * lead to the two sister sites, Samples and Addons & Tools, whose top line
+ * leads back here by its Home tab: they open in the same tab and carry a
+ * straight arrow. The addons and the developer
  * tools live on their own site, abap2ui5-addons.github.io: the "More" tile
  * and the second tab of the top line lead there. */
 import Page from "../layouts/Page.astro";
@@ -31,7 +32,7 @@ const groups: Group[] = [
     title: "Try it online",
     tiles: [
       { href: "https://abap2ui5.github.io/playground/", title: "Playground", text: "ABAP in the editor, the running app next to it. No server needed." },
-      { href: "https://abap2ui5.github.io/samples-site/", title: "Samples", text: "Hundreds of ready-to-run apps, by control and UI5 release." },
+      { href: "https://abap2ui5.github.io/samples-site/", title: "Samples", text: "Hundreds of ready-to-run apps, by control and UI5 release.", inside: true },
       { href: "https://abap2ui5.github.io/playground/ai/", title: "AI Studio", text: "Describe an app, watch it being written, download it for abapGit." },
       { href: "https://abap2ui5.github.io/layout-editor/", title: "Layout Editor", text: "Design a UI5 view by drag and drop, export one ABAP class." },
       { href: "https://abap2ui5-addons.github.io/abap-cloud-gui/#playground", title: "Report Converter", text: "Paste a classic report, get a class that runs on ABAP Cloud." },
