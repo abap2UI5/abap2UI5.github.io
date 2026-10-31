@@ -18,16 +18,17 @@ the one place that lists them all - the two role tiles, Try it online, More,
 Community. **No site carries a row of the other sites.** A reader who wants
 another site goes home and picks it, or follows a link in the text.
 
-The one exception is the pair that reads as one place: the home page and
-Addons & Tools share two tabs, **Home | Addons & Tools**, with the current
-one marked - the ink colour, weight 600 and a 2px underline in the accent.
+Beside the brand a site may name its own place as a tab, with the current
+one marked - the ink colour, weight 600 and a 2px underline in the accent:
+the home page says **Home**, the samples **Samples**, Addons & Tools
+**Home | Addons & Tools** (its way back). The home page reaches Addons &
+Tools by its More tile, not by a tab.
 
 ```html
 <div class="topline">
   <nav class="sites" aria-label="Sites">
     <a class="brand" href="https://abap2ui5.github.io/"><img src="logo.png" alt="" width="22" height="22"> abap2UI5</a>
     <a href="https://abap2ui5.github.io/" aria-current="page">Home</a>
-    <a href="https://abap2ui5-addons.github.io/">Addons &amp; Tools</a>
   </nav>
 </div>
 ```
