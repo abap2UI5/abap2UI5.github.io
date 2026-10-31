@@ -1,0 +1,59 @@
+---
+/* Who runs this, and what the sites do with your data. Not an Impressum in
+ * the German sense - a community project with no company behind it - but the
+ * questions a company asks before it lets its people use a tool are answered
+ * here, once, in plain words. It names no person and no place: the project
+ * is many contributors, and the contact address is the project's. Linked
+ * under the community row of the home page and from the foot of the sister
+ * sites. */
+import Page from "../layouts/Page.astro";
+const base = import.meta.env.BASE_URL;
+---
+<Page title="About abap2UI5" description="Who runs abap2UI5, what it is, and what the sites and the browser tools do with your data.">
+
+<div class="wrap prose">
+  <p class="crumb"><a href={base}>Home</a> <span aria-hidden="true">/</span> About</p>
+  <h1>About abap2UI5</h1>
+
+  <h2>What it is</h2>
+  <p>abap2UI5 is an open-source project: a framework for building UI5 apps in
+  ABAP, released under the <a href="https://github.com/abap2UI5/abap2UI5/blob/main/LICENSE">MIT license</a>,
+  and the sites around it - this page, the documentation, the samples, the
+  playground and the browser tools, the addons. All of it is free, and none of
+  it is a commercial offer. There is no company behind it, no product to buy
+  and nothing to sign up for.</p>
+
+  <h2>Who runs it</h2>
+  <p>abap2UI5 is a community project, built and maintained by many
+  contributors in their free time. The code and the sites live in the GitHub
+  organisations <a href="https://github.com/abap2UI5">abap2UI5</a> and
+  {" "}<a href="https://github.com/abap2UI5-addons">abap2UI5-addons</a>.
+  To reach the maintainers, write to
+  {" "}<a href="mailto:contact@abap2UI5.org">contact@abap2UI5.org</a> or open an
+  issue in the repository the question is about.</p>
+
+  <h2>Your data</h2>
+  <p>The sites collect nothing. They are static pages served by
+  {" "}<a href="https://pages.github.com/">GitHub Pages</a>: no accounts, no cookies
+  of their own, no analytics, no tracking. Like any web server, GitHub may
+  keep access logs; what it keeps and for how long is in
+  {" "}<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.</p>
+
+  <p>The browser tools run in your browser. The Playground, the Layout Editor
+  and the Report Converter compile and run your ABAP on your own machine; the
+  code never leaves it unless you share a link yourself.</p>
+
+  <p>The AI App Builder and the AI Agent talk to an AI model only when you
+  enter your own API key. Then what you type, and the code the tool works on,
+  is sent to the provider that key belongs to (OpenAI, Anthropic, or a server
+  you name, including one on your own machine) under that provider's terms.
+  The key is held in your browser for the visit and is never sent anywhere
+  else. Without a key, nothing is sent at all.</p>
+
+  <h2>No warranty</h2>
+  <p>The framework and the tools are provided as they are, without warranty of
+  any kind, as the MIT license says. Before you run anything on a system you
+  care about, read the code - it is all there.</p>
+</div>
+
+</Page>
