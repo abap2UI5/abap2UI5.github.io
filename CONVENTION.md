@@ -18,17 +18,30 @@ the one place that lists them all - the two role tiles, Try it online, More,
 Community. **No site carries a row of the other sites.** A reader who wants
 another site goes home and picks it, or follows a link in the text.
 
-Beside the brand a site may name its own place as a tab, with the current
-one marked - the ink colour, weight 600 and a 2px underline in the accent:
-the home page says **Home**; its two sister sites say **Home | Samples** and
-**Home | Addons & Tools** - the Home tab is their way back. The home page
-reaches them by a tile that opens in the same tab (→), not by a tab.
+Beside the brand a site shows where the reader is as a breadcrumb: the home
+page says **Home**; its two sister sites say **Home / Samples** and
+**Home / Addons & Tools**, and a page deeper in continues the trail
+(**Home / Samples / Learn / Basics**, **Home / Addons & Tools / sapgui**).
+The ancestors are muted links, the separator `/` is in the line colour, and
+only the last entry - the current page, not a link - is marked: the ink
+colour, weight 600 and a 2px underline in the accent. The home page reaches
+the sister sites by a tile that opens in the same tab (→), not by a tab.
 
 ```html
 <div class="topline">
-  <nav class="sites" aria-label="Sites">
+  <nav class="sites" aria-label="Breadcrumb">
     <a class="brand" href="https://abap2ui5.github.io/"><img src="logo.png" alt="" width="22" height="22"> abap2UI5</a>
     <a href="https://abap2ui5.github.io/" aria-current="page">Home</a>
+  </nav>
+</div>
+
+<!-- a sister site, one page deep -->
+<div class="topline">
+  <nav class="sites" aria-label="Breadcrumb">
+    <a class="brand" href="https://abap2ui5.github.io/"><img src="logo.png" alt="" width="22" height="22"> abap2UI5</a>
+    <a href="https://abap2ui5.github.io/">Home</a><span class="sep" aria-hidden="true">/</span>
+    <a href="/">Addons &amp; Tools</a><span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">sapgui</span>
   </nav>
 </div>
 ```
