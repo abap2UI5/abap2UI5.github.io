@@ -51,8 +51,8 @@ test("everything the page loads is in dist/", () => {
 test("every tile leaves the page, to a site of the project or a channel of the community", () => {
   const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
   const opened = [...html.matchAll(/<a class="tile" href="[^"]+" target="_blank" rel="noopener"/g)].length;
-  const inside = [...html.matchAll(/<a class="tile inside" href="(https:\/\/abap2ui5-addons\.github\.io\/|https:\/\/abap2ui5\.github\.io\/samples-site\/)">/g)].length;
-  assert.equal(inside, 2, "two tiles lead to the sister sites, Samples and Addons & Tools, in the same tab");
+  const inside = [...html.matchAll(/<a class="tile inside" href="(https:\/\/abap2ui5-addons\.github\.io\/|https:\/\/abap2ui5\.github\.io\/samples-site\/|https:\/\/abap2ui5\.github\.io\/insights\/)">/g)].length;
+  assert.equal(inside, 3, "three tiles lead to the sister sites, Samples, Insights and Addons & Tools, in the same tab");
   assert.equal(opened + inside, tiles.length, "every other tile opens in a new tab");
   const row = html.match(/<ul class="links">([\s\S]*?)<\/ul>/);
   assert.ok(row, "the community is a row of links");
