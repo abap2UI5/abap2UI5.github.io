@@ -12,44 +12,35 @@ it changes here first, and each site follows in its own pull request.
 
 ## 1. The top line
 
-Top left, the logo and the word **abap2UI5**, linking to the home page. To
-the right of them **the same five sites on every page of the family**, as
-plain absolute links, with the current one marked: the ink colour, weight 600
-and a 2px underline in the accent. The home page marks none.
+Top left, the logo and the word **abap2UI5**, linking to the home page. That
+is the way between the sites: every site leads home, and the home page is
+the one place that lists them all - the two role tiles, Try it online, More,
+Community. **No site carries a row of the other sites.** A reader who wants
+another site goes home and picks it, or follows a link in the text.
+
+The one exception is the pair that reads as one place: the home page and
+Addons & Tools share two tabs, **Home | Addons & Tools**, with the current
+one marked - the ink colour, weight 600 and a 2px underline in the accent.
 
 ```html
 <div class="topline">
-  <nav class="sites" aria-label="abap2UI5 sites">
+  <nav class="sites" aria-label="Sites">
     <a class="brand" href="https://abap2ui5.github.io/">abap2UI5</a>
-    <a href="https://abap2ui5.github.io/why/">For managers</a>
-    <a href="https://abap2ui5.github.io/docs/">Docs</a>
-    <a href="https://abap2ui5.github.io/samples-site/">Samples</a>
-    <a href="https://abap2ui5.github.io/playground/">Playground</a>
-    <a href="https://abap2ui5-addons.github.io/" aria-current="page">Addons &amp; Tools</a>
+    <a href="https://abap2ui5.github.io/" aria-current="page">Home</a>
+    <a href="https://abap2ui5-addons.github.io/">Addons &amp; Tools</a>
   </nav>
 </div>
 ```
 
-| Tab | Leads to | For |
-|---|---|---|
-| For managers | https://abap2ui5.github.io/why/ | the person who approves it |
-| Docs | https://abap2ui5.github.io/docs/ | the developer |
-| Samples | https://abap2ui5.github.io/samples-site/ | every sample, searchable |
-| Playground | https://abap2ui5.github.io/playground/ | ABAP in the browser |
-| Addons & Tools | https://abap2ui5-addons.github.io/ | what to install beside it |
-
-- The logo is the way home; there is no "Home" tab.
 - A link to another abap2UI5 site is an absolute URL. A site that is a
   single-page application (VitePress) gives such a link `target="_self"`, or
   its router draws its own 404 at the other site's URL.
 - A site's own pages (a FAQ, the chapters of the manual, the sections of a
-  tool) go in a second row or a sidebar of the site's own, never into this
-  line.
-- On a narrow screen the line wraps; a site with a bar of its own (the
-  playground) may show short names under the marks instead.
+  tool) are the site's own row or sidebar.
 - A tool that needs the full height of the window (the playground, the AI
-  Studio, the layout editor, the report converter) may keep its own toolbar,
-  as long as the logo, the word and the way home stay top left.
+  Studio, the layout editor, the report converter) keeps its own toolbar, as
+  long as the logo, the word and the way home stay top left. Its menu may
+  list the other sites.
 
 ## 2. Colour
 
