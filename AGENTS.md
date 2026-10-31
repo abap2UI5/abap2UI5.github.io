@@ -13,7 +13,7 @@ nothing in it depends on another repository at build time.
 | Path | Purpose |
 | --- | --- |
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
-| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the wordmark, Home and Addons & Tools as tabs, CONVENTION.md section 1), the one-line foot |
+| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the logo, the wordmark and Home, CONVENTION.md section 1), the one-line foot |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
@@ -50,8 +50,7 @@ imported; a change to it starts here.
   array of `src/pages/index.astro`; the markup below renders whatever is
   there. A tile is a title and one short line, nothing more - no badge, no
   address line. The addons and the developer tools are not on this page: they
-  live on their own site, reached by the one tile under "More" and the
-  "Addons & Tools" tab of the top line. Only the community carries marks
+  live on their own site, reached by the one tile under "More". Only the community carries marks
   (`src/components/marks.ts`), and it is a row of small tiles with a mark and a name, no text. A tile
   at rest is a border and a quiet ↗, no shadow, no icon. The line under a title is two lines at most:
   write it short (about 70 characters); the stylesheet cuts anything longer. "Try it online" is for what runs in the browser without an
