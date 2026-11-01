@@ -57,6 +57,13 @@ the sister sites by a tile that opens in the same tab (→), not by a tab.
   Studio, the layout editor, the report converter) keeps its own toolbar, as
   long as the logo, the word and the way home stay top left. Its menu may
   list the other sites.
+- The four tools - the Playground, the AI App Builder, the AI Agent
+  (abap2UI5/playground) and the Layout Editor (abap2UI5/layout-editor) -
+  wear one look, the AI App Builder's: one bar of logo, **abap2UI5** and the
+  tool's name in the accent, which is a menu of all four tools with the one
+  on screen marked; the work on cards on a sunken page; pills for what is
+  pressed; a light/dark switch at the right of the bar. The list of tools is
+  kept in both repositories; change the two together.
 
 ## 2. Colour
 
