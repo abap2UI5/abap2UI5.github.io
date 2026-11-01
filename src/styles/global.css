@@ -98,7 +98,7 @@ img { max-width: 100%; height: auto; }
 
 /* the box: a quiet pill under the greeting - a soft fill, no border, muted
  * type; it only shows its edge when the reader is in it */
-.search { position: relative; max-width: 220px; }
+.search { position: relative; max-width: 190px; }
 .search-field {
   display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 8px 0 11px;
   border: 1px solid transparent; border-radius: 16px; background: var(--soft); cursor: text;
@@ -113,8 +113,11 @@ img { max-width: 100%; height: auto; }
 }
 .search-field input::placeholder { color: var(--muted); opacity: .8; }
 .search-field input::-webkit-search-cancel-button { display: none; }
-/* the shortcut: plain muted letters, no key cap */
-.search-key { flex: none; font: 500 11px/1 var(--font); color: var(--muted); opacity: .7; white-space: nowrap; }
+/* the shortcut in a small key cap, as in the docs' bar */
+.search-key {
+  flex: none; padding: 1px 5px; border: 1px solid var(--line); border-radius: 5px;
+  font: 500 10.5px/1.5 var(--font); color: var(--muted); white-space: nowrap;
+}
 .search-field:focus-within .search-key { visibility: hidden; }
 @media (hover: none) { .search-key { display: none; } }
 
