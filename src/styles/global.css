@@ -78,10 +78,12 @@ img { max-width: 100%; height: auto; }
   margin: 28px 0 40px; color: var(--ink);
   font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -.025em; line-height: 1.15;
 }
-/* the logo hangs 24px into the space below the row (12px on a phone), so
- * the first group starts that much higher than a 104px row would let it */
-.welcome img { width: 104px; height: 104px; flex: none; margin-left: auto; margin-bottom: -24px; }
-@media (max-width: 620px) { .welcome { margin: 24px 0 28px; } .welcome img { width: 64px; height: 64px; margin-bottom: -12px; } }
+/* the logo is centred on the heading's line (1.15em high), not on the
+ * row: it rises by half of what it is taller than the line, 29px at 40px
+ * type. That also keeps the row short, so the first group starts close
+ * under the greeting */
+.welcome img { width: 104px; height: 104px; flex: none; margin-left: auto; margin-top: calc((1.15em - 104px) / 2); }
+@media (max-width: 620px) { .welcome { margin: 24px 0 28px; } .welcome img { width: 64px; height: 64px; margin-top: calc((1.15em - 64px) / 2); } }
 
 /* ---- the groups: a label, three tiles to a row at most ------------------- */
 /* the page is as wide as the Insights site (--width); in it the tiles fall
