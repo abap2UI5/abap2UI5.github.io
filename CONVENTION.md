@@ -106,7 +106,7 @@ the accent border and a 3px glow in *accent soft*.
 
 Every site carries one muted line at the bottom of the window however
 short the page, with no rule above it - as there is none under the top
-line. The home page says the least: the
-licence and About. A sister site (Samples, Addons & Tools) adds the name
-leading home, a link to edit the page and the mail as a mark at the right
-end.
+line, and it is the same line on every site: the licence and About, as
+the home page carries it. A sister site (Samples, Addons & Tools) adds
+nothing to it - the name leading home is the wordmark in the top line,
+and the mail is on About.
