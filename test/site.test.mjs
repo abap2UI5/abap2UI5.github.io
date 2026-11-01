@@ -1,8 +1,9 @@
 // What the built page must keep, read off dist/ after `npm run build`.
 // node:test, no browser: the page is static HTML, so the properties worth
-// holding are in the file - the greeting and the four groups, the policy, no
-// script, nothing that points at a file that is not there, and every tile
-// leaving the page.
+// holding are in the file - the greeting and the four groups, the policy, the
+// one script (the search box) and nothing inline, nothing that points at a
+// file that is not there, and every tile leaving the page. What the box does
+// in a browser is the docs' matcher's business, tested there.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -21,15 +22,36 @@ test("the page is the greeting and the four groups", () => {
   assert.doesNotMatch(html, /<nav class="sites"[\s\S]*abap2ui5-addons\.github\.io[\s\S]*<\/nav>/, "no Addons tab in the top line - the More tile leads there");
 });
 
-test("the page runs no script, and its policy says so", () => {
+test("the one script is the search box, a file of this origin, and the policy says so", () => {
   const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
-  assert.equal(scripts.length, 0, "no <script>");
+  assert.equal(scripts.length, 1, "one <script>: the search box");
+  assert.match(scripts[0][1], /^ type="module" src="\/search\.js"$/, "a module from this origin");
+  assert.equal(scripts[0][2].trim(), "", "nothing inline");
   assert.doesNotMatch(html, /\son[a-z]+=/i, "an inline event handler");
   assert.doesNotMatch(html, /\sstyle="/i, "an inline style the policy would refuse");
   const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/);
   assert.ok(csp, "a Content-Security-Policy meta");
   assert.match(csp[1], /script-src 'self'(;|$)/);
+  assert.match(csp[1], /connect-src 'self'(;|$)/);
   assert.match(csp[1], /default-src 'self'/);
+  // the About page runs none
+  assert.doesNotMatch(fs.readFileSync(path.join(DIST, "about", "index.html"), "utf8"), /<script\b/i, "a script on the About page");
+});
+
+test("the search box: hidden until its script shows it, reading the docs' index with the docs' matcher", () => {
+  assert.match(html, /<div class="search" id="search" role="search" hidden>/, "no box without the script");
+  assert.match(html, /<input id="search-input" type="search"[^>]*aria-controls="search-results"/);
+  assert.match(html, /<div class="search-results" id="search-results" role="listbox"[^>]*hidden>/);
+  const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
+  assert.match(box, /from '\.\/search-engine\.js'/, "the matcher beside it");
+  assert.match(box, /'\/docs\/search-index\.json'/, "the index of the docs, on this origin");
+  assert.doesNotMatch(box, /localStorage|sessionStorage|document\.cookie/, "nothing stored");
+  assert.doesNotMatch(box, /innerHTML|insertAdjacentHTML|outerHTML/, "no title of the index read as markup");
+  // the copy of abap2UI5/docs scripts/lib/search-engine.js exports what the box imports
+  const engine = fs.readFileSync(path.join(DIST, "search-engine.js"), "utf8");
+  for (const name of ["search", "grouped", "highlight", "loadIndex"]) {
+    assert.match(engine, new RegExp(`export (async )?function ${name}\\(`), `search-engine.js exports ${name}`);
+  }
 });
 
 test("everything the page loads is in dist/", () => {

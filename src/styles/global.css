@@ -1,7 +1,7 @@
 /* The entry page of abap2UI5 - the one stylesheet. A greeting and the tiles,
  * nothing else: ink and white, Inter, the brand red of the logo for the
  * hover of a tile and for a link. Light and dark follow the reader's system.
- * Nothing that needs a script. */
+ * The one thing a script adds is the search box (public/search.js). */
 
 @font-face {
   font-family: "Inter";
@@ -70,20 +70,71 @@ img { max-width: 100%; height: auto; }
 .sites .brand img { width: 22px; height: 22px; }
 .sites [aria-current="page"] { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--brand); padding-bottom: 1px; margin-bottom: -3px; /* the line takes no height: the word stays level with the trail */ }
 
-/* ---- the greeting -------------------------------------------------------- */
-/* the text stands at the top of the row, where Samples, Addons and Insights
- * put their heading - centred on the 104px logo it sat 29px lower */
+/* ---- the greeting and the search ---------------------------------------- */
+/* the greeting stands at the top of the row, where Samples, Addons and
+ * Insights put their heading; the search sits under it, and the 104px logo
+ * on the right spans both */
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.hello { display: flex; align-items: center; gap: 24px; margin: 28px 0 40px; }
+.hello-text { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 .welcome {
-  display: flex; align-items: flex-start; gap: 14px;
-  margin: 28px 0 40px; color: var(--ink);
+  margin: 0; color: var(--ink);
   font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -.025em; line-height: 1.15;
 }
-/* the logo is centred on the heading's line (1.15em high), not on the
- * row: it rises by half of what it is taller than the line, 29px at 40px
- * type. That also keeps the row short, so the first group starts close
- * under the greeting */
-.welcome img { width: 104px; height: 104px; flex: none; margin-left: auto; margin-top: calc((1.15em - 104px) / 2); }
-@media (max-width: 620px) { .welcome { margin: 24px 0 28px; } .welcome img { width: 64px; height: 64px; margin-top: calc((1.15em - 64px) / 2); } }
+.hello-logo { width: 104px; height: 104px; flex: none; align-self: flex-start; }
+/* on a phone the logo stays beside the greeting and the search takes the
+ * whole width under both */
+@media (max-width: 620px) {
+  .hello { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; margin: 24px 0 28px; }
+  .hello-text { display: contents; }
+  .welcome { grid-area: 1 / 1; }
+  .hello-logo { grid-area: 1 / 2; width: 64px; height: 64px; align-self: center; }
+  .search { grid-area: 2 / 1 / 3 / 3; max-width: none; }
+  .search-key { display: none; }
+}
+
+/* the box: as wide as a tile and a half, a soft field with the magnifier,
+ * the word and the shortcut - the look of the search in the docs' bar */
+.search { position: relative; max-width: 480px; }
+.search-field {
+  display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 10px 0 14px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--card); cursor: text;
+  transition: border-color .15s, box-shadow .15s;
+}
+.search-field:hover { border-color: var(--muted); }
+.search-field:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+.search-icon { width: 18px; height: 18px; flex: none; color: var(--muted); }
+.search-field input {
+  flex: 1 1 auto; min-width: 0; height: 100%; padding: 0; border: 0; outline: none; background: none;
+  color: var(--ink); font: inherit; font-size: 15px;
+}
+.search-field input::placeholder { color: var(--muted); }
+.search-field input::-webkit-search-cancel-button { display: none; }
+.search-key {
+  flex: none; padding: 1px 7px; border: 1px solid var(--line); border-radius: 6px;
+  font: 500 12px/1.6 var(--font); color: var(--muted); white-space: nowrap;
+}
+.search-field:focus-within .search-key { visibility: hidden; }
+@media (hover: none) { .search-key { display: none; } }
+
+/* the results: a list under the box, grouped the way the index groups them */
+.search-results {
+  position: absolute; z-index: 10; top: calc(100% + 6px); left: 0; width: min(640px, calc(100vw - 32px));
+  max-height: min(70vh, 520px); overflow-y: auto; padding: 6px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: var(--shadow);
+}
+.search-group {
+  display: flex; justify-content: space-between; gap: 12px; padding: 10px 10px 4px;
+  font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+}
+.search-count { font-weight: 500; letter-spacing: 0; text-transform: none; }
+.search-hit { display: grid; gap: 1px; padding: 7px 10px; border-radius: 8px; color: var(--text); text-decoration: none; }
+.search-hit[aria-selected="true"] { background: var(--brand-soft); color: var(--text); }
+.search-title { color: var(--ink); font-size: 14.5px; font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-sub { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-hit mark { background: none; color: var(--brand); }
+.search-note { margin: 0; padding: 10px; font-size: 14px; color: var(--muted); }
 
 /* ---- the groups: a label, three tiles to a row at most ------------------- */
 /* the page is as wide as the Insights site (--width); in it the tiles fall
