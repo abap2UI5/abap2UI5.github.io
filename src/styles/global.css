@@ -132,12 +132,48 @@ img { max-width: 100%; height: auto; }
   font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
 }
 .search-count { font-weight: 500; letter-spacing: 0; text-transform: none; }
-.search-hit { display: grid; gap: 1px; padding: 7px 10px; border-radius: 8px; color: var(--text); text-decoration: none; }
-.search-hit[aria-selected="true"] { background: var(--brand-soft); color: var(--text); }
+/* a hit: the link and, on the right, its actions (source, README, issues) */
+.search-row { display: flex; align-items: center; gap: 8px; border-radius: 8px; }
+.search-row.is-active { background: var(--brand-soft); }
+.search-hit { flex: 1 1 auto; min-width: 0; display: grid; gap: 1px; padding: 7px 10px; border-radius: 8px; color: var(--text); text-decoration: none; }
+.search-hit:hover { color: var(--text); }
 .search-title { color: var(--ink); font-size: 14.5px; font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-hit.is-out .search-title::after { content: " ↗"; color: var(--muted); font-weight: 400; }
+.search-row.is-best .search-title { font-size: 15px; }
 .search-sub { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .search-hit mark { background: none; color: var(--brand); }
+.search-actions { flex: none; display: flex; gap: 4px; padding-right: 8px; }
+.search-action {
+  padding: 1px 7px; border: 1px solid var(--line); border-radius: 5px; background: var(--card);
+  font-size: 11.5px; line-height: 1.6; color: var(--muted); text-decoration: none; white-space: nowrap;
+}
+.search-action:hover, .search-action.is-active { border-color: var(--brand); color: var(--brand); }
+/* the way out: the query on GitHub, and on the home page the whole list */
+.search-out {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 6px; padding: 10px 10px 6px;
+  border-top: 1px solid var(--line); font-size: 13px; color: var(--muted);
+}
+.search-out a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.search-out a:hover { color: var(--brand); }
+.search-out .search-out-link::after { content: " ↗"; color: var(--muted); font-weight: 400; }
+.search-out .search-all { margin-left: auto; color: var(--brand); }
+/* in the list under the box it stays in view at the bottom, however far
+ * the hits scroll - it is the answer when they are not */
+.search[data-mode="box"] .search-out { position: sticky; bottom: -6px; margin-bottom: -6px; padding-bottom: 10px; background: var(--card); }
+@media (max-width: 620px) { .search-actions { display: none; } }
 .search-note { margin: 0; padding: 10px; font-size: 14px; color: var(--muted); }
+
+/* ---- /search/: the same box, the results on the page under it ---------- */
+.search-page { padding-top: 28px; padding-bottom: 48px; }
+.search-page h1 { margin: 0 0 20px; color: var(--ink); font-size: clamp(28px, 4vw, 40px); line-height: 1.15; letter-spacing: -.025em; }
+.search[data-mode="page"] { max-width: 760px; }
+.search[data-mode="page"] .search-field { height: 40px; border-radius: 20px; padding: 0 12px 0 14px; }
+.search[data-mode="page"] .search-field input { font-size: 15px; }
+.search[data-mode="page"] .search-results {
+  position: static; width: auto; max-height: none; overflow: visible; margin-top: 16px; padding: 0;
+  border: 0; box-shadow: none; background: none;
+}
+@media (max-width: 620px) { .search-page { padding-top: 24px; } }
 
 /* ---- the groups: a label, three tiles to a row at most ------------------- */
 /* the page is as wide as the Insights site (--width); in it the tiles fall

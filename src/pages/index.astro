@@ -14,6 +14,7 @@
  * and the second tab of the top line lead there. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
+import Search from "../components/Search.astro";
 
 type Tile = { href: string; title: string; text?: string; mark?: keyof typeof MARKS; for?: string; inside?: boolean };
 type Group = { id: string; title: string; tiles: Tile[] };
@@ -66,19 +67,7 @@ const base = import.meta.env.BASE_URL;
   <div class="hello">
     <div class="hello-text">
       <h1 class="welcome">Welcome to abap2UI5</h1>
-      {/* The search: the docs and the three sample catalogues, from the index
-        * the docs publish (/docs/search-index.json). It is the page's one
-        * script, search.js, that shows the box - without a script there is
-        * nothing it could do, so it stays hidden. */}
-      <div class="search" id="search" role="search" hidden>
-        <label class="search-field">
-          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          <span class="sr-only">Search the documentation and the samples</span>
-          <input id="search-input" type="search" placeholder="Search" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
-          <kbd class="search-key" aria-hidden="true">Ctrl K</kbd>
-        </label>
-        <div class="search-results" id="search-results" role="listbox" aria-label="Results" hidden></div>
-      </div>
+      <Search />
     </div>
     <img class="hello-logo" src={`${base}logo.png`} alt="" width="104" height="104">
   </div>
