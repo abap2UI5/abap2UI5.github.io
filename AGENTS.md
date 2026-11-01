@@ -5,8 +5,9 @@ https://abap2ui5.github.io/ that points at everything the project publishes -
 the documentation, the why-site, the browser tools, the development tools, the
 addons and the community channels. A signpost, not a manual: it explains
 nothing that another site explains, every tile leaves the page. Built the way
-abap2UI5/why is built (Astro, no script, nothing from another origin), and
-nothing in it depends on another repository at build time.
+abap2UI5/why is built (Astro, nothing from another origin), with one script -
+the search box - and nothing in it depends on another repository at build
+time.
 
 ## Layout
 
@@ -15,6 +16,8 @@ nothing in it depends on another repository at build time.
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
 | `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the logo, the wordmark and Home, CONVENTION.md section 1), the one-line foot at the bottom of the window (the licence and About, section 5) |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
+| `public/search.js` | The search box under the greeting - the one script of the site |
+| `public/search-engine.js` | The matcher: a copy of `scripts/lib/search-engine.js` in abap2UI5/docs, as it is there |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
 | `.github/workflows/pages.yml` | Build + test on every PR; deploy on main |
@@ -42,8 +45,9 @@ imported; a change to it starts here.
 
 ## Rules
 
-- **A greeting and four groups.** The `<h1>` says "Welcome to abap2UI5" and
-  nothing else introduces the page. The ids `introduction`, `try-it`, `more`, `community`
+- **A greeting, the search and four groups.** The `<h1>` says "Welcome to abap2UI5" and
+  nothing else introduces the page; the search box sits under it, the logo
+  beside both. The ids `introduction`, `try-it`, `more`, `community`
   are what the test names and
   what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
@@ -63,8 +67,21 @@ imported; a change to it starts here.
   are the tiles to the sister sites, Samples, Insights and Addons & Tools (`inside`): same tab, straight arrow (→); their top line leads back by its Home tab. SAP Community and Bluesky have no abap2UI5
   channel yet; their tiles lead to the platform until there is one. Never
   point a tile into nothing.
-- **No script.** The policy is `script-src 'self'` and the page ships none:
-  no inline script, no `on…=` handler, no inline `style=""`.
+- **One script: the search.** `public/search.js`, a module of this origin,
+  loaded on the home page only (`<Page search>`); the policy is
+  `script-src 'self'` and `connect-src 'self'`, and nothing else runs: no
+  inline script, no `on…=` handler, no inline `style=""`. The box searches
+  the documentation and the three sample catalogues from the index the docs
+  publish on this origin, `/docs/search-index.json` (abap2UI5/docs,
+  `scripts/generate-search.mjs`), fetched the first time the box is used,
+  never at load; nothing is stored. The box is `hidden` in the markup and the
+  script shows it, so without a script there is no field that does nothing.
+  The matcher, `public/search-engine.js`, is a copy of the docs' - the
+  playground carries one too: never edit it here, take a new copy when the
+  docs change theirs. Locally (`npm run dev`) there is no `/docs/` beside the
+  page, and the box says the search is not available; to try it, serve
+  `dist/` with the index saved as `docs/search-index.json` next to it.
+  A result opens in the same tab: it is where the reader asked to go.
 - **Nothing from another origin.** No CDN, no web font service, no analytics;
   the font and the images are in `public/`.
 - **Short.** The page is scanned, not read: one sentence per tile, the visible
