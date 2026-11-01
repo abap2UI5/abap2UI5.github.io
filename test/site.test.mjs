@@ -39,7 +39,7 @@ test("the one script is the search box, a file of this origin, and the policy sa
 });
 
 test("the search box: hidden until its script shows it, reading the docs' index with the docs' matcher", () => {
-  assert.match(html, /<div class="search" id="search" role="search" hidden>/, "no box without the script");
+  assert.match(html, /<div class="search" id="search" role="search" data-mode="box" hidden>/, "no box without the script");
   assert.match(html, /<input id="search-input" type="search"[^>]*aria-controls="search-results"/);
   assert.match(html, /<div class="search-results" id="search-results" role="listbox"[^>]*hidden>/);
   const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
@@ -49,7 +49,7 @@ test("the search box: hidden until its script shows it, reading the docs' index 
   assert.doesNotMatch(box, /innerHTML|insertAdjacentHTML|outerHTML/, "no title of the index read as markup");
   // the copy of abap2UI5/docs scripts/lib/search-engine.js exports what the box imports
   const engine = fs.readFileSync(path.join(DIST, "search-engine.js"), "utf8");
-  for (const name of ["search", "grouped", "highlight", "loadIndex"]) {
+  for (const name of ["search", "grouped", "highlight", "loadIndex", "jumps", "elsewhere", "actions", "parseScope"]) {
     assert.match(engine, new RegExp(`export (async )?function ${name}\\(`), `search-engine.js exports ${name}`);
   }
 });
@@ -96,4 +96,21 @@ test("the page is a signpost, not a manual", () => {
   const open = html.replace(/<head>[\s\S]*?<\/head>/, "").replace(/<[^>]+>/g, " ");
   const words = open.trim().split(/\s+/).length;
   assert.ok(words <= 500, `${words} words on the page`);
+});
+
+test("the search as a page: /search/?q=, the same box and script, and the browser can add it", () => {
+  const page = fs.readFileSync(path.join(DIST, "search", "index.html"), "utf8");
+  assert.match(page, /<div class="search" id="search" role="search" data-mode="page" hidden>/, "the box, in page mode");
+  const scripts = [...page.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
+  assert.equal(scripts.length, 1, "the one script");
+  assert.match(scripts[0][1], /src="\/search\.js"/);
+  assert.match(page, /<link rel="canonical" href="https:\/\/abap2ui5\.github\.io\/search\/">/);
+  for (const doc of [html, page]) {
+    assert.match(doc, /<link rel="search" type="application\/opensearchdescription\+xml" title="abap2UI5" href="\/opensearch\.xml">/, "the browser finds the search");
+  }
+  const os = fs.readFileSync(path.join(DIST, "opensearch.xml"), "utf8");
+  assert.match(os, /template="https:\/\/abap2ui5\.github\.io\/search\/\?q=\{searchTerms\}"/, "the template is the page");
+  const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
+  assert.match(box, /new URLSearchParams\(location\.search\)\.get\('q'\)/, "the page reads its query from the address");
+  assert.match(box, /\/search\/\?q=/, "the box on the home page leads to all results");
 });

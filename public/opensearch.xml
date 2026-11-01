@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>abap2UI5</ShortName>
+  <Description>The documentation, the samples, the repositories and the API of abap2UI5</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="32" height="32" type="image/png">https://abap2ui5.github.io/favicon.png</Image>
+  <Url type="text/html" method="get" template="https://abap2ui5.github.io/search/?q={searchTerms}"/>
+  <moz:SearchForm>https://abap2ui5.github.io/search/</moz:SearchForm>
+</OpenSearchDescription>

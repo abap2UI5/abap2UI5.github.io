@@ -1,0 +1,15 @@
+---
+/* The search as a page of its own: https://abap2ui5.github.io/search/?q=popup.
+ * The same box and the same index as on the home page, with room for every
+ * group - and an address, so a search can be linked, bookmarked, and added
+ * to the browser as a search engine (public/opensearch.xml points here). */
+import Page from "../layouts/Page.astro";
+import Search from "../components/Search.astro";
+---
+<Page search trail="Search" title="Search — abap2UI5" description="Search the documentation, the samples, the repositories, the tools, the essays and the API of abap2UI5 at once.">
+<div class="wrap search-page">
+  <h1>Search</h1>
+  <Search page />
+  <noscript><p class="search-note">The search needs JavaScript. The <a href="https://abap2ui5.github.io/docs/">documentation</a> has a search of its own.</p></noscript>
+</div>
+</Page>

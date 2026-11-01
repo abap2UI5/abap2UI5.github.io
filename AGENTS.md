@@ -16,7 +16,10 @@ time.
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
 | `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the logo, the wordmark and Home, CONVENTION.md section 1), the one-line foot at the bottom of the window (the licence and About, section 5) |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
-| `public/search.js` | The search box under the greeting - the one script of the site |
+| `src/components/Search.astro` | The search box's markup, on the home page and on `/search/` (`page`) |
+| `src/pages/search.astro` | The search as a page: `/search/?q=…`, all results, an address to link and bookmark |
+| `public/search.js` | The search box - the one script of the site |
+| `public/opensearch.xml` | Lets a browser add the search as a search engine; its template is `/search/?q={searchTerms}` |
 | `public/search-engine.js` | The matcher: a copy of `scripts/lib/search-engine.js` in abap2UI5/docs, as it is there |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
@@ -68,13 +71,22 @@ imported; a change to it starts here.
   channel yet; their tiles lead to the platform until there is one. Never
   point a tile into nothing.
 - **One script: the search.** `public/search.js`, a module of this origin,
-  loaded on the home page only (`<Page search>`); the policy is
+  loaded on the home page and on `/search/` (`<Page search>`); the policy is
   `script-src 'self'` and `connect-src 'self'`, and nothing else runs: no
   inline script, no `on…=` handler, no inline `style=""`. The box searches
-  the documentation and the three sample catalogues from the index the docs
-  publish on this origin, `/docs/search-index.json` (abap2UI5/docs,
-  `scripts/generate-search.mjs`), fetched the first time the box is used,
-  never at load; nothing is stored. The box is `hidden` in the markup and the
+  the whole family - the documentation, the three sample catalogues, every
+  repository of both organisations, the tools, the essays, the page for
+  decision makers, the addons, the client API and the framework's classes -
+  from the one index the docs publish on this origin,
+  `/docs/search-index.json` (abap2UI5/docs, `scripts/generate-search.mjs`
+  and `scripts/lib/search-family.mjs`), fetched the first time the box is
+  used, never at load; nothing is stored. A query that names something
+  (`#1234`, a class, a method, a repository, a tool) gets it as the best
+  answer; a hit carries its actions (source, README, issues; Right and Left
+  walk them); a scope narrows to one area (`repo:`, `api:`, `sample:`,
+  `doc:`, `addon:` …). Issues, discussions and the code of every repository
+  are searched by handing the query to GitHub's search - links, never a
+  request from the page, so `connect-src` stays `'self'`. The box is `hidden` in the markup and the
   script shows it, so without a script there is no field that does nothing.
   The matcher, `public/search-engine.js`, is a copy of the docs' - the
   playground carries one too: never edit it here, take a new copy when the

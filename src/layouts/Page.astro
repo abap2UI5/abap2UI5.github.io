@@ -7,8 +7,9 @@
  * the same line with the other tab current.
  *
  * THE POLICY. GitHub Pages sets no headers of ours, so the Content-Security-
- * Policy is a <meta>. The one script is the search box on the home page,
- * a file of this origin (public/search.js) - script-src is 'self', no
+ * Policy is a <meta>. The one script is the search box on the home page
+ * and on /search/, a file of this origin (public/search.js) - script-src is
+ * 'self', no
  * inline script, no handler attribute - and everything it loads or fetches
  * is this origin too: the index is /docs/search-index.json, published by the
  * docs next to this page. test/site.test.mjs holds the page to it. */
@@ -51,6 +52,7 @@ const CSP = [
 <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`}>
 <link rel="preload" href={`${base}fonts/inter-roman-latin.woff2`} as="font" type="font/woff2" crossorigin>
 {search && <script type="module" src={`${base}search.js`} is:inline></script>}
+<link rel="search" type="application/opensearchdescription+xml" title="abap2UI5" href={`${base}opensearch.xml`}>
 </head>
 <body>
 <div class="topline wrap">
