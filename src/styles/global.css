@@ -101,11 +101,12 @@ img { max-width: 100%; height: auto; }
 .search { position: relative; max-width: 190px; }
 .search-field {
   display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 8px 0 11px;
-  border: 1px solid transparent; border-radius: 16px; background: var(--soft); cursor: text;
-  transition: border-color .15s, background-color .15s;
+  border: 1px solid var(--line); border-radius: 16px; background: var(--card); cursor: text;
+  transition: border-color .15s;
 }
-.search-field:hover { border-color: var(--line); }
-.search-field:focus-within { border-color: var(--brand); background: var(--card); }
+/* White, as the tiles are, so its hairline is what sets it off the page. */
+.search-field:hover { border-color: color-mix(in srgb, var(--line) 50%, var(--muted)); }
+.search-field:focus-within { border-color: var(--brand); }
 .search-icon { width: 14px; height: 14px; flex: none; color: var(--muted); opacity: .7; }
 .search-field input {
   flex: 1 1 auto; min-width: 0; height: 100%; padding: 0; border: 0; outline: none; background: none;
