@@ -24,7 +24,9 @@ page says **Home**; its two sister sites say **Home / Samples** and
 (**Home / Samples / Learn / Basics**, **Home / Addons & Tools / sapgui**).
 The ancestors are muted links, the separator `/` is in the line colour, and
 only the last entry - the current page, not a link - is marked: the ink
-colour, weight 600 and a 2px underline in the accent. The home page reaches
+colour, weight 600 and a 2px underline in the accent. The underline takes
+no height (`margin-bottom: -3px` against its 2px line and 1px gap): the
+marked word stays level with the rest of the trail. The home page reaches
 the sister sites by a tile that opens in the same tab (→), not by a tab.
 
 ```html
