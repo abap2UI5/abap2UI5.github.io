@@ -134,7 +134,7 @@ main { flex: 1 0 auto; padding-bottom: 32px; }
  * page, as on Samples and Addons (CONVENTION.md section 5) - the licence and
  * who runs this. */
 .foot { margin-top: 8px; padding-bottom: 12px; font-size: 13px; color: var(--muted); }
-.foot-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding-top: 8px; }
+.foot-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 8px; } /* no rule above it, as there is none under the top bar */
 .foot a { color: var(--muted); text-decoration: none; }
 .foot a:hover { color: var(--brand); }
 
