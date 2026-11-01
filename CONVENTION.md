@@ -102,7 +102,8 @@ the accent border and a 3px glow in *accent soft*.
 
 ## 5. The foot
 
-The home page has none: it ends with the community row. A sister site
-(Samples, Addons & Tools) carries one muted line at the bottom of the
-window however short the page: the name leading home, the licence, a link
-to edit the page and the mail as a mark at the right end.
+Every site carries one muted line at the bottom of the window however
+short the page, over a rule in *line*. The home page says the least: the
+licence and About. A sister site (Samples, Addons & Tools) adds the name
+leading home, a link to edit the page and the mail as a mark at the right
+end.

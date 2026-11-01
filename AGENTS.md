@@ -13,7 +13,7 @@ nothing in it depends on another repository at build time.
 | Path | Purpose |
 | --- | --- |
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
-| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the logo, the wordmark and Home, CONVENTION.md section 1), the one-line foot |
+| `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the logo, the wordmark and Home, CONVENTION.md section 1), the one-line foot at the bottom of the window (the licence and About, section 5) |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
