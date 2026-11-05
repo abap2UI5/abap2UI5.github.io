@@ -67,8 +67,8 @@ imported; a change to it starts here.
 - **Every tile leaves the page, in a new tab.** The test holds every tile to
   `https://`, to the project's own places, and to `target="_blank"` with
   `rel="noopener"`; the arrow in the corner says so (↗). The two exceptions
-  are the tiles to the sister sites, Samples, Insights and Addons & Tools (`inside`): same tab, straight arrow (→); their top line leads back by its Home tab. SAP Community and Bluesky have no abap2UI5
-  channel yet; their tiles lead to the platform until there is one. Never
+  are the tiles to the sister sites, Samples, Insights and Addons & Tools (`inside`): same tab, straight arrow (→); their top line leads back by its Home tab. SAP Community leads to the project's profile
+  there; Bluesky has no abap2UI5 channel yet and leads to the platform until there is one. Never
   point a tile into nothing.
 - **One script: the search.** `public/search.js`, a module of this origin,
   loaded on the home page and on `/search/` (`<Page search>`); the policy is
