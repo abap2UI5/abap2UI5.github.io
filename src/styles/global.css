@@ -85,6 +85,18 @@ img { max-width: 100%; height: auto; }
   font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -.025em; line-height: 1.15;
 }
 .hello-logo { width: 104px; height: 104px; flex: none; align-self: flex-start; }
+/* one line that says what abap2UI5 is, and the two ways in: the playground
+ * (nothing to install) and the quickstart (your own system) */
+.tagline { margin: 0; max-width: 640px; font-size: 17px; line-height: 1.5; color: var(--muted); }
+.calls { margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.call {
+  display: inline-block; padding: 9px 16px; border: 1px solid var(--line); border-radius: 999px;
+  font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.call:hover { border-color: var(--brand); color: var(--brand); }
+.call.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.call.primary:hover { background: var(--brand-strong); border-color: var(--brand-strong); color: #fff; }
 /* on a phone the logo stays beside the greeting and the search takes the
  * whole width under both */
 @media (max-width: 620px) {
@@ -92,7 +104,9 @@ img { max-width: 100%; height: auto; }
   .hello-text { display: contents; }
   .welcome { grid-area: 1 / 1; }
   .hello-logo { grid-area: 1 / 2; width: 64px; height: 64px; align-self: center; }
-  .search { grid-area: 2 / 1 / 3 / 3; }
+  .tagline { grid-area: 2 / 1 / 3 / 3; }
+  .calls { grid-area: 3 / 1 / 4 / 3; }
+  .search { grid-area: 4 / 1 / 5 / 3; }
   .search-key { display: none; }
 }
 
