@@ -48,14 +48,13 @@ imported; a change to it starts here.
 
 ## Rules
 
-- **A greeting, one line, two ways in and four groups.** The `<h1>` says "Welcome to abap2UI5";
-  under it one sentence says what abap2UI5 is (the tagline, the only
-  explanation on the page - a visitor who has never heard the name learns it
-  here, in ten seconds, and nowhere else on the page), then the two calls:
-  the playground (nothing to install) and the quickstart (your own system).
-  The logo sits beside all of it. No search box here (removed 2026-11-12,
-  maintainer decision): the search is the page `/search/`, and the
-  quickstart is the second call, not a tile of its own. The ids `introduction`, `try-it`, `more`, `community`
+- **A greeting, two ways in and four groups.** The `<h1>` says "Welcome to abap2UI5";
+  under it the two calls, small: the playground (nothing to install) and the
+  quickstart (your own system). The logo sits beside them. No tagline and no
+  search box here (both removed 2026-11-12, maintainer decision): what
+  abap2UI5 is stays in the page's meta description and behind the first
+  tiles, the search is the page `/search/`, and the quickstart is the second
+  call, not a tile of its own. The ids `introduction`, `try-it`, `more`, `community`
   are what the test names and
   what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
