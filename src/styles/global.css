@@ -47,7 +47,9 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
-  min-height: 100vh; display: flex; flex-direction: column;
+  /* dvh where the browser knows it: 100vh is the window WITH its toolbars
+   * retracted, so the foot at the bottom of a 100vh page sat under the edge */
+  min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
   font: 16px/1.6 var(--font); font-feature-settings: "cv11", "ss01";
   overflow-wrap: break-word;
 }
@@ -236,7 +238,7 @@ main { flex: 1 0 auto; padding-bottom: 32px; }
 /* The foot: one muted line at the bottom of the window however short the
  * page, as on Samples and Addons (CONVENTION.md section 5) - the licence and
  * who runs this. */
-.foot { margin-top: 8px; padding-bottom: 12px; font-size: 13px; color: var(--muted); }
+.foot { margin-top: 8px; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); font-size: 13px; color: var(--muted); }
 .foot-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 8px; } /* no rule above it, as there is none under the top bar */
 .foot a { color: var(--muted); text-decoration: none; }
 .foot a:hover { color: var(--brand); }
