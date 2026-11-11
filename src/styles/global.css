@@ -87,10 +87,10 @@ img { max-width: 100%; height: auto; }
 .hello-logo { width: 104px; height: 104px; flex: none; align-self: flex-start; }
 /* the two ways in: the playground (nothing to install) and the quickstart
  * (your own system) */
-.calls { margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.calls { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .call {
-  display: inline-block; padding: 6px 13px; border: 1px solid var(--line); border-radius: 999px;
-  font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none;
+  display: inline-block; padding: 4px 11px; border: 1px solid var(--line); border-radius: 999px;
+  font-size: 13px; font-weight: 600; color: var(--ink); text-decoration: none;
   transition: border-color .15s, background .15s, color .15s;
 }
 .call:hover { border-color: var(--brand); color: var(--brand); }
