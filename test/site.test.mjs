@@ -22,11 +22,10 @@ test("the page is the greeting and the four groups", () => {
   assert.doesNotMatch(html, /<nav class="sites"[\s\S]*abap2ui5-addons\.github\.io[\s\S]*<\/nav>/, "no Addons tab in the top line - the More tile leads there");
 });
 
-test("the one script is the search box, a file of this origin, and the policy says so", () => {
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
-  assert.equal(scripts.length, 1, "one <script>: the search box");
-  assert.match(scripts[0][1], /^ type="module" src="\/search\.js"$/, "a module from this origin");
-  assert.equal(scripts[0][2].trim(), "", "nothing inline");
+test("the home page runs no script, and the policy allows only this origin", () => {
+  assert.doesNotMatch(html, /<script\b/i, "a script on the home page - the search lives on /search/");
+  assert.doesNotMatch(html, /id="search"|id="search-input"/, "a search box on the home page");
+  assert.match(html, />Install it in 5 minutes<\/a>/, "the second call");
   assert.doesNotMatch(html, /\son[a-z]+=/i, "an inline event handler");
   assert.doesNotMatch(html, /\sstyle="/i, "an inline style the policy would refuse");
   const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/);
@@ -39,9 +38,10 @@ test("the one script is the search box, a file of this origin, and the policy sa
 });
 
 test("the search box: hidden until its script shows it, reading the docs' index with the docs' matcher", () => {
-  assert.match(html, /<div class="search" id="search" role="search" data-mode="box" hidden>/, "no box without the script");
-  assert.match(html, /<input id="search-input" type="search"[^>]*aria-controls="search-results"/);
-  assert.match(html, /<div class="search-results" id="search-results" role="listbox"[^>]*hidden>/);
+  const page = fs.readFileSync(path.join(DIST, "search", "index.html"), "utf8");
+  assert.match(page, /<div class="search" id="search" role="search" data-mode="page" hidden>/, "no box without the script");
+  assert.match(page, /<input id="search-input" type="search"[^>]*aria-controls="search-results"/);
+  assert.match(page, /<div class="search-results" id="search-results" role="listbox"[^>]*hidden>/);
   const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
   assert.match(box, /from '\.\/search-engine\.js'/, "the matcher beside it");
   assert.match(box, /'\/docs\/search-index\.json'/, "the index of the docs, on this origin");
