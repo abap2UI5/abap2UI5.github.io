@@ -14,7 +14,6 @@
  * and the second tab of the top line lead there. */
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
-import Search from "../components/Search.astro";
 
 type Tile = { href: string; title: string; text?: string; mark?: keyof typeof MARKS; for?: string; inside?: boolean };
 type Group = { id: string; title: string; tiles: Tile[] };
@@ -25,7 +24,6 @@ const groups: Group[] = [
     title: "Introduction",
     tiles: [
       { href: "https://abap2ui5.github.io/docs/", for: "For developers", title: "How does it work?", text: "The technical view: how it works, how to install it, how to build apps." },
-      { href: "https://abap2ui5.github.io/docs/get_started/quickstart", for: "For developers", title: "Install it", text: "An abapGit pull, one handler class, one SICF node: your own system in 15 minutes." },
       { href: "https://abap2ui5.github.io/why/", for: "For managers", title: "What is abap2UI5?", text: "The business view: what it means for your team, landscape and budget." },
     ],
   },
@@ -62,7 +60,7 @@ const groups: Group[] = [
 ];
 const base = import.meta.env.BASE_URL;
 ---
-<Page search title="abap2UI5 – Build UI5 apps purely in ABAP" description="Welcome to abap2UI5: the documentation, the playground and the browser tools, the development tools, the addons and where the community meets." >
+<Page title="abap2UI5 – Build UI5 apps purely in ABAP" description="Welcome to abap2UI5: the documentation, the playground and the browser tools, the development tools, the addons and where the community meets." >
 
 <div class="wrap">
   <div class="hello">
@@ -71,9 +69,8 @@ const base = import.meta.env.BASE_URL;
       <p class="tagline">Build UI5 apps purely in ABAP: one class is one app, no JavaScript, no OData, no frontend project. Open source, from NetWeaver 7.02 to ABAP Cloud.</p>
       <p class="calls">
         <a class="call primary" href="https://abap2ui5.github.io/playground/" target="_blank" rel="noopener">Try it in the playground</a>
-        <a class="call" href="https://abap2ui5.github.io/docs/get_started/quickstart" target="_blank" rel="noopener">Install it in 15 minutes</a>
+        <a class="call" href="https://abap2ui5.github.io/docs/get_started/quickstart" target="_blank" rel="noopener">Install it in 5 minutes</a>
       </p>
-      <Search />
     </div>
     <img class="hello-logo" src={`${base}logo.png`} alt="" width="104" height="104">
   </div>

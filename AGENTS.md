@@ -6,8 +6,8 @@ the documentation, the why-site, the browser tools, the development tools, the
 addons and the community channels. A signpost, not a manual: it explains
 nothing that another site explains, every tile leaves the page. Built the way
 abap2UI5/why is built (Astro, nothing from another origin), with one script -
-the search box - and nothing in it depends on another repository at build
-time.
+the search box of `/search/` - and nothing in it depends on another repository
+at build time.
 
 ## Layout
 
@@ -16,7 +16,7 @@ time.
 | `src/pages/index.astro` | The page: the four groups and their tiles as data at the top, the markup below |
 | `src/layouts/Page.astro` | The document: head, the Content-Security-Policy, the top line (the logo, the wordmark and Home, CONVENTION.md section 1), the one-line foot at the bottom of the window (the licence and About, section 5) |
 | `src/styles/global.css` | The one stylesheet; light and dark follow the system |
-| `src/components/Search.astro` | The search box's markup, on the home page and on `/search/` (`page`) |
+| `src/components/Search.astro` | The search box's markup, on `/search/` (`page`); the home page carries none |
 | `src/pages/search.astro` | The search as a page: `/search/?q=…`, all results, an address to link and bookmark |
 | `public/search.js` | The search box - the one script of the site |
 | `public/opensearch.xml` | Lets a browser add the search as a search engine; its template is `/search/?q={searchTerms}` |
@@ -48,12 +48,14 @@ imported; a change to it starts here.
 
 ## Rules
 
-- **A greeting, one line, two ways in, the search and four groups.** The `<h1>` says "Welcome to abap2UI5";
+- **A greeting, one line, two ways in and four groups.** The `<h1>` says "Welcome to abap2UI5";
   under it one sentence says what abap2UI5 is (the tagline, the only
   explanation on the page - a visitor who has never heard the name learns it
   here, in ten seconds, and nowhere else on the page), then the two calls:
   the playground (nothing to install) and the quickstart (your own system).
-  The search box sits under them, the logo beside all of it. The ids `introduction`, `try-it`, `more`, `community`
+  The logo sits beside all of it. No search box here (removed 2026-11-12,
+  maintainer decision): the search is the page `/search/`, and the
+  quickstart is the second call, not a tile of its own. The ids `introduction`, `try-it`, `more`, `community`
   are what the test names and
   what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
@@ -74,7 +76,7 @@ imported; a change to it starts here.
   there; Bluesky has no abap2UI5 channel yet and leads to the platform until there is one. Never
   point a tile into nothing.
 - **One script: the search.** `public/search.js`, a module of this origin,
-  loaded on the home page and on `/search/` (`<Page search>`); the policy is
+  loaded on `/search/` only (`<Page search>`) - the home page runs no script; the policy is
   `script-src 'self'` and `connect-src 'self'`, and nothing else runs: no
   inline script, no `on…=` handler, no inline `style=""`. The box searches
   the whole family - the documentation, the three sample catalogues, every
