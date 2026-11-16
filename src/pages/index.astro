@@ -16,7 +16,7 @@
 import Page from "../layouts/Page.astro";
 import { MARKS } from "../components/marks";
 
-type Tile = { href: string; title: string; text?: string; mark?: keyof typeof MARKS; for?: string; inside?: boolean };
+type Tile = { href: string; title: string; text?: string; mark?: keyof typeof MARKS; inside?: boolean };
 type Group = { id: string; title: string; tiles: Tile[] };
 
 const groups: Group[] = [
@@ -24,8 +24,8 @@ const groups: Group[] = [
     id: "introduction",
     title: "Introduction",
     tiles: [
-      { href: "https://abap2ui5.github.io/why/", for: "For managers", title: "The business case", text: "What your team can build, how it compares, what it costs, who runs it." },
-      { href: "https://abap2ui5.github.io/docs/", for: "For developers", title: "The documentation", text: "How it works, how to install it and how to build your first app." },
+      { href: "https://abap2ui5.github.io/why/", title: "For managers", text: "What your team can build, how it compares, what it costs, who runs it." },
+      { href: "https://abap2ui5.github.io/docs/", title: "For developers", text: "How it works, how to install it and how to build your first app." },
     ],
   },
   {
@@ -92,7 +92,6 @@ const base = import.meta.env.BASE_URL;
         {g.tiles.map((t) => (
           <li>
             <a class:list={["tile", { inside: t.inside }]} href={t.href} target={t.inside ? undefined : "_blank"} rel={t.inside ? undefined : "noopener"}>
-              {t.for && <span class="for">{t.for}</span>}
               <strong>{t.title}</strong>
               <span class="text">{t.text}</span>
             </a>
