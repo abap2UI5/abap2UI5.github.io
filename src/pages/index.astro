@@ -2,6 +2,7 @@
 /* The entry page: a greeting, then the places a reader can go, in four
  * groups. Every tile leaves the page - this page explains nothing that the
  * docs, the why-site or a repository's README explains; it only points there.
+ * Under the greeting stands the one line that says what abap2UI5 is.
  *
  * The tiles are data, so a new tool or addon is one line here. SAP Community
  * leads to the project's profile there; Bluesky has no abap2UI5 channel yet
@@ -23,8 +24,8 @@ const groups: Group[] = [
     id: "introduction",
     title: "Introduction",
     tiles: [
-      { href: "https://abap2ui5.github.io/docs/", for: "For developers", title: "Build UI5 apps in ABAP", text: "One ABAP class is one app, no JavaScript. How it works, how to install it, how to build apps." },
-      { href: "https://abap2ui5.github.io/why/", for: "For managers", title: "What it means for your organization", text: "What your ABAP team can build with it, how it compares, what it costs and who runs it." },
+      { href: "https://abap2ui5.github.io/why/", for: "For managers", title: "The business case", text: "What your team can build, how it compares, what it costs, who runs it." },
+      { href: "https://abap2ui5.github.io/docs/", for: "For developers", title: "The documentation", text: "How it works, how to install it and how to build your first app." },
     ],
   },
   {
@@ -66,6 +67,7 @@ const base = import.meta.env.BASE_URL;
   <div class="hello">
     <div class="hello-text">
       <h1 class="welcome">Welcome to abap2UI5</h1>
+      <p class="tagline">Build UI5 Apps Purely in ABAP</p>
       <p class="calls">
         <a class="call primary" href="https://abap2ui5.github.io/playground/" target="_blank" rel="noopener">Try it in the playground</a>
         <a class="call" href="https://abap2ui5.github.io/docs/get_started/quickstart" target="_blank" rel="noopener">Install it in 5 minutes</a>

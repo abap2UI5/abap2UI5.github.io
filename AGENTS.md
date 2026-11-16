@@ -48,13 +48,15 @@ imported; a change to it starts here.
 
 ## Rules
 
-- **A greeting, two ways in and four groups.** The `<h1>` says "Welcome to abap2UI5";
-  under it the two calls, small: the playground (nothing to install) and the
-  quickstart (your own system). The logo sits beside them. No tagline and no
-  search box here (both removed 2026-11-12, maintainer decision): what
-  abap2UI5 is stays in the page's meta description and behind the first
-  tiles, the search is the page `/search/`, and the quickstart is the second
-  call, not a tile of its own. The ids `introduction`, `try-it`, `more`, `community`
+- **A greeting, one line, two ways in and four groups.** The `<h1>` says
+  "Welcome to abap2UI5"; under it the one line that says what it is, "Build UI5
+  Apps Purely in ABAP" (back since 2026-11-16, maintainer decision - one line,
+  not the paragraph that was removed on 2026-11-12); under that the two calls,
+  small: the playground (nothing to install) and the quickstart (your own
+  system). The logo sits beside them. No search box here: the search is the
+  page `/search/`, and the quickstart is the second call, not a tile of its
+  own. The first group starts with the tile for managers (the why-site), then
+  the one for developers (the docs). The ids `introduction`, `try-it`, `more`, `community`
   are what the test names and
   what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
