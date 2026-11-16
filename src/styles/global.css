@@ -80,16 +80,16 @@ img { max-width: 100%; height: auto; }
  * on the right spans both */
 [hidden] { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.hello { display: flex; align-items: center; gap: 24px; margin: 28px 0 40px; }
-.hello-text { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.hello { display: flex; align-items: flex-start; gap: 24px; margin: 28px 0 48px; }
+.hello-text { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
 .welcome {
   margin: 0; color: var(--ink);
   font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -.025em; line-height: 1.15;
 }
-.hello-logo { width: 104px; height: 104px; flex: none; align-self: flex-start; }
-/* the one line under the greeting that says what abap2UI5 is; it sits close
- * to the h1, the calls keep the grid's gap below it */
-.tagline { margin: -8px 0 0; color: var(--muted); font-size: clamp(17px, 2vw, 20px); font-weight: 500; line-height: 1.35; }
+.hello-logo { width: 88px; height: 88px; flex: none; margin-top: 4px; }
+/* the one line under the greeting that says what abap2UI5 is: close to the
+ * h1, a clear step down to the calls - one rhythm, no gap of the grid */
+.tagline { margin: 6px 0 24px; color: var(--muted); font-size: clamp(17px, 2vw, 20px); font-weight: 400; line-height: 1.35; }
 /* the two ways in: the playground (nothing to install) and the quickstart
  * (your own system) */
 .calls { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -107,8 +107,8 @@ img { max-width: 100%; height: auto; }
   .hello { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; margin: 24px 0 28px; }
   .hello-text { display: contents; }
   .welcome { grid-area: 1 / 1; }
-  .hello-logo { grid-area: 1 / 2; width: 64px; height: 64px; align-self: center; }
-  .tagline { grid-area: 2 / 1 / 3 / 3; margin-top: -10px; }
+  .hello-logo { grid-area: 1 / 2; width: 64px; height: 64px; align-self: center; margin-top: 0; }
+  .tagline { grid-area: 2 / 1 / 3 / 3; margin: -10px 0 0; }
   .calls { grid-area: 3 / 1 / 4 / 3; }
   .search { grid-area: 4 / 1 / 5 / 3; }
   .search-key { display: none; }
@@ -220,8 +220,6 @@ img { max-width: 100%; height: auto; }
 .tile.inside::after { content: "→"; }
 .tile.inside:hover::after, .tile.inside:focus-visible::after { transform: translateX(3px); }
 .tile strong { color: var(--ink); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
-/* who a tile is for, above its title */
-.tile .for { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
 .tile .text { font-size: 14px; line-height: 1.5; color: var(--muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 /* the community: a row of small tiles - the border, the radius and the hover
  * of the big ones, the platform mark before the name, no text */

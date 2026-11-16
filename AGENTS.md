@@ -55,8 +55,9 @@ imported; a change to it starts here.
   small: the playground (nothing to install) and the quickstart (your own
   system). The logo sits beside them. No search box here: the search is the
   page `/search/`, and the quickstart is the second call, not a tile of its
-  own. The first group starts with the tile for managers (the why-site), then
-  the one for developers (the docs). The ids `introduction`, `try-it`, `more`, `community`
+  own. The first group starts with the tile "For managers" (the why-site),
+  then "For developers" (the docs): the reader is the title, no label above
+  it - red stays on the first call and the logo. The ids `introduction`, `try-it`, `more`, `community`
   are what the test names and
   what other sites may link; reword a heading freely, keep the `id`.
 - **A tile is one line of data.** Add, reorder or drop a tool in the `groups`
