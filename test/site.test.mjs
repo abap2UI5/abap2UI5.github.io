@@ -14,6 +14,7 @@ const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 
 test("the page is the greeting and the four groups", () => {
   assert.match(html, /<h1 class="welcome">[\s\S]*Welcome to abap2UI5/);
+  assert.match(html, /<\/h1>\s*<p class="tagline">Build UI5 Apps Purely in ABAP<\/p>/, "the line under the greeting");
   for (const id of ["introduction", "try-it", "more", "community"]) {
     assert.match(html, new RegExp(`<section class="group" id="${id}"`), `#${id}`);
   }
