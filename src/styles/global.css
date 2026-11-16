@@ -86,7 +86,7 @@ img { max-width: 100%; height: auto; }
   margin: 0; color: var(--ink);
   font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -.025em; line-height: 1.15;
 }
-.hello-logo { width: 88px; height: 88px; flex: none; margin-top: 4px; }
+.hello-logo { width: 104px; height: 104px; flex: none; margin-top: 4px; }
 /* the one line under the greeting that says what abap2UI5 is: close to the
  * h1, a clear step down to the calls - one rhythm, no gap of the grid */
 .tagline { margin: 6px 0 24px; color: var(--muted); font-size: clamp(17px, 2vw, 20px); font-weight: 400; line-height: 1.35; }
