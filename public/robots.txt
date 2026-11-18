@@ -3,5 +3,5 @@ Allow: /
 
 Sitemap: https://abap2ui5.github.io/sitemap.xml
 Sitemap: https://abap2ui5.github.io/docs/sitemap.xml
-Sitemap: https://abap2ui5.github.io/why/sitemap.xml
-Sitemap: https://abap2ui5.github.io/playground/sitemap.xml
+Sitemap: https://abap2ui5.github.io/docs-manager/sitemap.xml
+Sitemap: https://abap2ui5.github.io/browser-playground/sitemap.xml
