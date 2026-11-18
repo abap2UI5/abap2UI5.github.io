@@ -58,7 +58,7 @@ the sister sites by a tile that opens in the same tab (→), not by a tab.
   long as the logo, the word and the way home stay top left. Its menu may
   list the other sites.
 - The four tools - the Playground, the AI App Builder, the AI Agent
-  (abap2UI5/playground) and the Layout Editor (abap2UI5/layout-editor) -
+  (abap2UI5/browser-playground) and the Layout Editor (abap2UI5/browser-layout-editor) -
   wear one look, the AI App Builder's: one bar of logo, **abap2UI5** and the
   tool's name in the accent, which is a menu of all four tools with the one
   on screen marked; the work on cards on a sunken page; pills for what is

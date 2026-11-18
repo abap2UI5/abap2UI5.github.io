@@ -74,7 +74,7 @@ test("everything the page loads is in dist/", () => {
 test("every tile leaves the page, to a site of the project or a channel of the community", () => {
   const tiles = [...html.matchAll(/<a class="tile[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
   const opened = [...html.matchAll(/<a class="tile" href="[^"]+" target="_blank" rel="noopener"/g)].length;
-  const inside = [...html.matchAll(/<a class="tile inside" href="(https:\/\/abap2ui5-addons\.github\.io\/|https:\/\/abap2ui5\.github\.io\/samples-site\/|https:\/\/abap2ui5\.github\.io\/insights\/)">/g)].length;
+  const inside = [...html.matchAll(/<a class="tile inside" href="(https:\/\/abap2ui5-addons\.github\.io\/|https:\/\/abap2ui5\.github\.io\/samples-site\/|https:\/\/abap2ui5\.github\.io\/docs-insights\/)">/g)].length;
   assert.equal(inside, 3, "three tiles lead to the sister sites, Samples, Insights and Addons & Tools, in the same tab");
   assert.equal(opened + inside, tiles.length, "every other tile opens in a new tab");
   const row = html.match(/<ul class="links">([\s\S]*?)<\/ul>/);
@@ -114,4 +114,20 @@ test("the search as a page: /search/?q=, the same box and script, and the browse
   const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
   assert.match(box, /new URLSearchParams\(location\.search\)\.get\('q'\)/, "the page reads its query from the address");
   assert.match(box, /\/search\/\?q=/, "the box on the home page leads to all results");
+});
+
+test("the old addresses of renamed sites land on the 404 page, which forwards them", async () => {
+  const page = fs.readFileSync(path.join(DIST, "404.html"), "utf8");
+  assert.match(page, /<script type="module" src="\/moved\.js"><\/script>/, "the forwarder");
+  assert.match(page, /<meta name="robots" content="noindex">/);
+  assert.match(page, /href="\/docs-insights\/"/, "a link for a reader without script");
+  assert.doesNotMatch(page, /\son[a-z]+=|\sstyle="/i, "nothing inline");
+  const { movedTo } = await import(path.join(DIST, "moved.js"));
+  assert.equal(movedTo("/insights/23-the-draft"), "/docs-insights/23-the-draft");
+  assert.equal(movedTo("/why"), "/docs-manager/");
+  assert.equal(movedTo("/why/faq/"), "/docs-manager/faq/");
+  assert.equal(movedTo("/playground/ai/"), "/browser-playground/ai/");
+  assert.equal(movedTo("/layout-editor/"), "/browser-layout-editor/");
+  assert.equal(movedTo("/whyever/"), null, "a path that only starts like one");
+  assert.equal(movedTo("/docs/x"), null);
 });

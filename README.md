@@ -7,15 +7,21 @@ the development tools, the addons and the community channels.
 The sites it points at are built in their own repositories:
 
 - `/docs/` – [abap2UI5/docs](https://github.com/abap2UI5/docs)
-- `/why/` – [abap2UI5/why](https://github.com/abap2UI5/why)
-- `/playground/` – [abap2UI5/playground](https://github.com/abap2UI5/playground)
-- `/layout-editor/` – [abap2UI5/layout-editor](https://github.com/abap2UI5/layout-editor)
+- `/docs-manager/` – [abap2UI5/docs-manager](https://github.com/abap2UI5/docs-manager)
+- `/docs-insights/` – [abap2UI5/docs-insights](https://github.com/abap2UI5/docs-insights)
+- `/browser-playground/` – [abap2UI5/browser-playground](https://github.com/abap2UI5/browser-playground)
+- `/browser-layout-editor/` – [abap2UI5/browser-layout-editor](https://github.com/abap2UI5/browser-layout-editor)
 
 ```bash
 npm ci
 npm run dev      # http://localhost:4321/
 npm run check    # build + test, what CI runs
 ```
+
+Sites that moved keep their old addresses: `/why/`, `/insights/`,
+`/playground/` and `/layout-editor/` land on this site's 404 page, whose one
+script (`public/moved.js`) forwards them to the new address with the rest of
+the path, the query and the fragment.
 
 Adding a tool, an addon or a channel is one line in the `groups` array of
 `src/pages/index.astro`. See `AGENTS.md` for the rules.

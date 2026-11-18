@@ -5,7 +5,7 @@ https://abap2ui5.github.io/ that points at everything the project publishes -
 the documentation, the why-site, the browser tools, the development tools, the
 addons and the community channels. A signpost, not a manual: it explains
 nothing that another site explains, every tile leaves the page. Built the way
-abap2UI5/why is built (Astro, nothing from another origin), with one script -
+abap2UI5/docs-manager is built (Astro, nothing from another origin), with one script -
 the search box of `/search/` - and nothing in it depends on another repository
 at build time.
 
@@ -20,12 +20,13 @@ at build time.
 | `src/pages/search.astro` | The search as a page: `/search/?q=…`, all results, an address to link and bookmark |
 | `public/search.js` | The search box - the one script of the site |
 | `public/opensearch.xml` | Lets a browser add the search as a search engine; its template is `/search/?q={searchTerms}` |
+| `src/pages/404.astro`, `public/moved.js` | The 404 page of the whole domain - GitHub Pages serves it for every path no project site claims - and its one script, which forwards the old addresses of renamed sites (`/why/`, `/insights/`, `/playground/`, `/layout-editor/`) to their new ones, with path, query and fragment. A rename is one line in `MOVED` |
 | `public/search-engine.js` | The matcher: a copy of `scripts/lib/search-engine.js` in abap2UI5/docs, as it is there |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
 | `.github/workflows/pages.yml` | Build + test on every PR; deploy on main |
 
-The sites under `/docs/`, `/why/`, `/insights/`, `/playground/` and `/layout-editor/` are
+The sites under `/docs/`, `/docs-manager/`, `/docs-insights/`, `/browser-playground/` and `/browser-layout-editor/` are
 project sites of their own repositories; GitHub Pages serves them next to this
 page, nothing here builds or copies them.
 
@@ -77,7 +78,9 @@ imported; a change to it starts here.
   are the tiles to the sister sites, Samples, Insights and Addons & Tools (`inside`): same tab, straight arrow (→); their top line leads back by its Home tab. SAP Community leads to the project's profile
   there; Bluesky has no abap2UI5 channel yet and leads to the platform until there is one. Never
   point a tile into nothing.
-- **One script: the search.** `public/search.js`, a module of this origin,
+- **One script per page, and only two: the search and the forwarder.** The forwarder,
+  `public/moved.js`, runs on the 404 page only (`<Page moved>`) and does nothing
+  but `location.replace` for an address in its table. The search: `public/search.js`, a module of this origin,
   loaded on `/search/` only (`<Page search>`) - the home page runs no script; the policy is
   `script-src 'self'` and `connect-src 'self'`, and nothing else runs: no
   inline script, no `on…=` handler, no inline `style=""`. The box searches

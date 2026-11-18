@@ -1,0 +1,32 @@
+---
+/* The organisation's root site answers every path that no project site
+ * claims - so the old addresses of the sites whose repositories were renamed
+ * land here. public/moved.js forwards them to the new address with the rest
+ * of the path, the query and the fragment; without a script, the list below
+ * leads there by hand. Any other unknown path just gets the way home. */
+import Page from "../layouts/Page.astro";
+import { MOVED } from "../../public/moved.js";
+const NAMES = {
+  "/docs-insights": "Insights",
+  "/docs-manager": "For managers",
+  "/browser-playground": "Playground",
+  "/browser-layout-editor": "Layout Editor",
+};
+const moves = MOVED.filter(([, to], i, all) => all.findIndex(([, t]) => t === to) === i);
+---
+<Page trail="Not found" title="Page not found - abap2UI5" description="This address does not exist (anymore). Some abap2UI5 sites moved; this page forwards their old addresses." moved>
+
+<div class="wrap prose">
+  <h1>Page not found</h1>
+  <p>This address does not exist. Some sites of abap2UI5 moved when their
+  repositories were renamed - an old address of one of them forwards to its
+  new place by itself. If nothing happens, follow the link:</p>
+  <ul>
+    {moves.map(([from, to]) => (
+      <li><code>{from}/</code> is now <a href={`${to}/`}>{NAMES[to]}: <code>{to}/</code></a></li>
+    ))}
+  </ul>
+  <p>Anything else: start again on the <a href={import.meta.env.BASE_URL}>home page</a>.</p>
+</div>
+
+</Page>
