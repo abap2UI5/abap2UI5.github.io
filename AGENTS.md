@@ -21,7 +21,7 @@ at build time.
 | `public/search.js` | The search box - the one script of the site |
 | `public/opensearch.xml` | Lets a browser add the search as a search engine; its template is `/search/?q={searchTerms}` |
 | `src/pages/404.astro`, `public/moved.js` | The 404 page of the whole domain - GitHub Pages serves it for every path no project site claims - and its one script, which forwards the old addresses of renamed sites (`/why/`, `/insights/`, `/playground/`, `/layout-editor/`) to their new ones, with path, query and fragment. A rename is one line in `MOVED` |
-| `public/search-engine.js` | The matcher: a copy of `scripts/lib/search-engine.js` in abap2UI5/docs, as it is there |
+| `public/search-engine.js` | The matcher: `scripts/lib/search-engine.js` in abap2UI5/docs, byte for byte - `scripts/check-search-engine.mjs` (`npm run check:engine`, part of `npm run check`) compares it with docs' `main`: a difference fails, an unreachable source warns locally and fails under CI |
 | `public/` | Font (Inter, self-hosted), logo, icons |
 | `test/site.test.mjs` | `node:test` over the built `dist/index.html` |
 | `.github/workflows/pages.yml` | Build + test on every PR; deploy on main |
@@ -37,7 +37,7 @@ npm ci
 npm run dev      # dev server, http://localhost:4321/
 npm run build    # dist/
 npm test         # the tests, against dist/ - build first
-npm run check    # build + test, what CI runs
+npm run check    # build + test + check:engine, what CI runs
 ```
 
 ## The family
@@ -98,9 +98,14 @@ imported; a change to it starts here.
   are searched by handing the query to GitHub's search - links, never a
   request from the page, so `connect-src` stays `'self'`. The box is `hidden` in the markup and the
   script shows it, so without a script there is no field that does nothing.
-  The matcher, `public/search-engine.js`, is a copy of the docs' - the
-  playground carries one too: never edit it here, take a new copy when the
-  docs change theirs. Locally (`npm run dev`) there is no `/docs/` beside the
+  The matcher, `public/search-engine.js`, is the docs' file byte for byte -
+  the playground carries one too: never edit it here, take a new copy when
+  the docs change theirs (`check:engine` fails until you do). Under the field
+  one panel in three siblings: the status (`role="status"`, polite - every
+  note and the count), the listbox (only the hits, a `role="group"` per area)
+  and the way out (GitHub, all results) - nothing but options in the listbox.
+  The index fetch gives up after 20 s, and a failed one is tried again on the
+  next focus of the field. Locally (`npm run dev`) there is no `/docs/` beside the
   page, and the box says the search is not available; to try it, serve
   `dist/` with the index saved as `docs/search-index.json` next to it.
   A result opens in the same tab: it is where the reader asked to go.

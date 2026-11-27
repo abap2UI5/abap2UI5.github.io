@@ -5,7 +5,14 @@
  * a script there is nothing it could do, so the markup ships it hidden.
  *
  * `page`: the box of /search/ - the results stay on the page under it instead
- * of opening as a list under the field, and the query is the page's ?q=. */
+ * of opening as a list under the field, and the query is the page's ?q=.
+ *
+ * Three parts under the field, one panel: the status (role="status", polite -
+ * "Loading…", "nothing found", the count, a typo corrected: what a screen
+ * reader is told without moving), the listbox (the hits and nothing but the
+ * hits, in a group per area) and the way out (the query on GitHub, all
+ * results). Only the hits are options, so the arrow keys and a screen reader
+ * walk the same list. */
 interface Props { page?: boolean }
 const { page = false } = Astro.props;
 ---
@@ -16,5 +23,9 @@ const { page = false } = Astro.props;
     <input id="search-input" type="search" placeholder={page ? "Search docs, samples, repos, API" : "Search"} autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
     <kbd class="search-key" aria-hidden="true">Ctrl K</kbd>
   </label>
-  <div class="search-results" id="search-results" role="listbox" aria-label="Results" hidden></div>
+  <div class="search-panel" id="search-panel" hidden>
+    <div class="search-status" id="search-status" role="status" aria-live="polite"></div>
+    <div class="search-results" id="search-results" role="listbox" aria-label="Results"></div>
+    <div class="search-out" id="search-out" hidden></div>
+  </div>
 </div>

@@ -42,7 +42,7 @@ test("the search box: hidden until its script shows it, reading the docs' index 
   const page = fs.readFileSync(path.join(DIST, "search", "index.html"), "utf8");
   assert.match(page, /<div class="search" id="search" role="search" data-mode="page" hidden>/, "no box without the script");
   assert.match(page, /<input id="search-input" type="search"[^>]*aria-controls="search-results"/);
-  assert.match(page, /<div class="search-results" id="search-results" role="listbox"[^>]*hidden>/);
+  assert.match(page, /<div class="search-panel" id="search-panel" hidden>/, "the panel under the field, closed");
   const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
   assert.match(box, /from '\.\/search-engine\.js'/, "the matcher beside it");
   assert.match(box, /'\/docs\/search-index\.json'/, "the index of the docs, on this origin");
@@ -53,6 +53,42 @@ test("the search box: hidden until its script shows it, reading the docs' index 
   for (const name of ["search", "grouped", "highlight", "loadIndex", "jumps", "elsewhere", "actions", "parseScope"]) {
     assert.match(engine, new RegExp(`export (async )?function ${name}\\(`), `search-engine.js exports ${name}`);
   }
+});
+
+test("the listbox holds only the hits; notes are a polite status and the way out sits beside it", () => {
+  const page = fs.readFileSync(path.join(DIST, "search", "index.html"), "utf8");
+  const panel = page.match(/<div class="search-panel" id="search-panel" hidden>([\s\S]*?)<\/div>\s*<\/div>/);
+  assert.ok(panel, "the panel");
+  const parts = [...panel[1].matchAll(/<div class="([^"]+)" id="([^"]+)"([^>]*)>/g)].map((m) => [m[2], m[3]]);
+  assert.deepEqual(parts.map(([id]) => id), ["search-status", "search-results", "search-out"], "status, listbox, way out - siblings");
+  assert.match(parts[0][1], /role="status"/);
+  assert.match(parts[0][1], /aria-live="polite"/);
+  assert.match(parts[1][1], /role="listbox"/);
+  assert.match(page, /<div class="search-results" id="search-results" role="listbox" aria-label="Results"><\/div>/, "the listbox starts empty");
+  const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
+  assert.match(box, /status\.append\(p\)/, "a note goes to the status");
+  assert.doesNotMatch(box, /list\.append\(note\(/, "a note in the listbox");
+  assert.match(box, /setAttribute\('role', 'group'\)/, "a group of options per area");
+  assert.match(box, /aria-labelledby/, "named by its heading");
+  assert.doesNotMatch(box, /list\.append\(out\)/, "the way out in the listbox");
+});
+
+test("a failed index is tried again on the next focus, and a hanging one is given up", () => {
+  const box = fs.readFileSync(path.join(DIST, "search.js"), "utf8");
+  assert.match(box, /AbortSignal\.timeout\(INDEX_TIMEOUT\)/, "a timeout on the fetch");
+  assert.match(box, /loadIndex\(INDEX, \{ fetchFn: withTimeout \}\)/, "handed to the matcher's loader");
+  assert.match(box, /if \(retry && failed && !loading\) failed = false;/, "a failure is not for the rest of the visit");
+  assert.match(box, /addEventListener\('focus', \(\) => \{ ensureIndex\(true\)/, "the next focus retries");
+});
+
+test("the matcher is the docs' file, and the check that says so", async () => {
+  const { compare, SOURCE_URL } = await import("../scripts/check-search-engine.mjs");
+  assert.equal(SOURCE_URL, "https://raw.githubusercontent.com/abap2UI5/docs/main/scripts/lib/search-engine.js");
+  const serve = (text) => async () => ({ ok: true, status: 200, text: async () => text });
+  assert.equal((await compare({ fetchFn: serve("x"), copy: "x" })).verdict, "same");
+  assert.equal((await compare({ fetchFn: serve("y"), copy: "x" })).verdict, "different");
+  assert.deepEqual(await compare({ fetchFn: async () => { throw new Error("offline"); }, copy: "x" }), { verdict: "unreachable", why: "offline" });
+  assert.equal((await compare({ fetchFn: async () => ({ ok: false, status: 404 }), copy: "x" })).verdict, "unreachable");
 });
 
 test("everything the page loads is in dist/", () => {

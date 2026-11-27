@@ -25,7 +25,16 @@
  * field offers the places to go.
  *
  * The index is fetched the first time the box is used, never at load: a
- * reader who does not search pays nothing for the box. Nothing is stored.
+ * reader who does not search pays nothing for the box. Nothing is stored. A
+ * fetch that hangs is given up after INDEX_TIMEOUT, and a failed one is tried
+ * again the next time the field is focused - one bad moment of the network
+ * does not switch the search off for the rest of the visit.
+ *
+ * Under the field, one panel in three parts: the status (role="status",
+ * polite - the notes, the count), the listbox (only the hits, a group per
+ * area) and the way out (GitHub, all results). The arrow keys move through
+ * the options of the listbox, so a screen reader and the keyboard walk the
+ * same list.
  *
  * Keys: Ctrl K / Cmd K or "/" go to the box; Up and Down move through the
  * hits, Right and Left through the actions of the chosen one, Enter opens
@@ -38,12 +47,18 @@
 import { search, grouped, highlight, loadIndex, jumps, elsewhere, actions, parseScope } from './search-engine.js';
 
 const INDEX = '/docs/search-index.json';
+/* the index is about 700 kB (180 over the wire): a fetch still going after
+ * this long is not going to arrive */
+const INDEX_TIMEOUT = 20000;
 
 const box = document.getElementById('search');
 const input = document.getElementById('search-input');
+const panel = document.getElementById('search-panel');
+const status = document.getElementById('search-status');
 const list = document.getElementById('search-results');
+const out = document.getElementById('search-out');
 
-if (box && input && list) {
+if (box && input && panel && status && list && out) {
   const page = box.dataset.mode === 'page';
   const LIMIT = page ? 400 : 80;
   const PER_GROUP = page ? 12 : 4;
@@ -55,6 +70,9 @@ if (box && input && list) {
 
   let entries = null;
   let failed = false;
+  let loading = false;
+  /* where the next row goes: the listbox, or the group a section opened */
+  let into = list;
   /* one row per hit: its main link and its actions */
   let rows = [];
   let active = -1;
@@ -82,7 +100,7 @@ if (box && input && list) {
 
   const open = (yes) => {
     if (page) yes = true;
-    list.hidden = !yes;
+    panel.hidden = !yes;
     input.setAttribute('aria-expanded', String(yes));
     if (!yes) select(-1);
   };
@@ -108,18 +126,26 @@ if (box && input && list) {
     }
   };
 
+  /* A note goes to the status, never into the listbox: it is something to
+   * be told, not an option to be chosen. */
   const note = (text, more) => {
     const p = el('p', 'search-note', text);
     if (more) p.append(' ', link(null, more.href, more.text));
-    return p;
+    status.append(p);
   };
 
+  /* A group of the listbox: its label, and the rows after it go inside. */
   const section = (label, extra) => {
+    const group = el('div', 'search-section');
+    group.setAttribute('role', 'group');
     const head = el('div', 'search-group');
-    head.setAttribute('role', 'presentation');
+    head.id = `search-group-${list.children.length}`;
     head.append(el('span', null, label));
     if (extra) head.append(el('span', 'search-count', extra));
-    return head;
+    group.setAttribute('aria-labelledby', head.id);
+    group.append(head);
+    list.append(group);
+    into = group;
   };
 
   /* One hit: the main link (the option the arrows move through) and its
@@ -170,24 +196,24 @@ if (box && input && list) {
     const i = rows.length;
     row.addEventListener('mousemove', () => { if (active !== i) select(i); });
     rows.push({ row, main, actions: acts });
-    list.append(row);
+    into.append(row);
   };
 
+  /* the way out: beside the listbox, not in it */
   const footer = (query) => {
-    const out = el('div', 'search-out');
     out.append(el('span', 'search-out-label', `“${query}” on GitHub:`));
     for (const e of elsewhere(query)) out.append(link('search-out-link', e.url, e.label));
     if (!page) out.append(link('search-all', `/search/?q=${encodeURIComponent(input.value.trim())}`, 'All results →'));
-    list.append(out);
+    out.hidden = false;
   };
 
   const startHere = () => {
     const tools = (entries || []).filter((e) => e.area === 'tools');
     if (tools.length) {
-      list.append(section('Go to'));
+      section('Go to');
       for (const e of tools.slice(0, page ? tools.length : 6)) addRow({ entry: e }, '');
     }
-    list.append(note('Try #123 for an issue, a class name, or a scope: repo: · api: · sample: · doc: · addon:'));
+    note('Try #123 for an issue, a class name, or a scope: repo: · api: · sample: · doc: · addon:');
   };
 
   const render = () => {
@@ -197,14 +223,18 @@ if (box && input && list) {
     action = -1;
     input.removeAttribute('aria-activedescendant');
     list.replaceChildren();
+    status.replaceChildren();
+    out.replaceChildren();
+    out.hidden = true;
+    into = list;
 
     if (failed) {
-      list.append(note('The search is not available right now.', { text: 'Search the documentation instead.', href: 'https://abap2ui5.github.io/docs/' }));
+      note('The search is not available right now.', { text: 'Search the documentation instead.', href: 'https://abap2ui5.github.io/docs/' });
       open(true);
       return;
     }
     if (!entries) {
-      list.append(note('Loading…'));
+      note('Loading…');
       open(true);
       return;
     }
@@ -219,29 +249,36 @@ if (box && input && list) {
     const hits = search(entries, query, { limit: LIMIT });
 
     if (best.length) {
-      list.append(section('Best answer'));
+      section('Best answer');
       for (const j of best) addRow(j, words, { best: true });
     }
-    if (hits.relaxedTo) list.append(note(`Nothing for “${words}” - showing “${hits.relaxedTo}”.`));
+    if (hits.relaxedTo) note(`Nothing for “${words}” - showing “${hits.relaxedTo}”.`);
     const shown = hits.relaxedTo || words;
     const taken = new Set(best.map((j) => (j.entry ? j.entry.url : j.url)));
 
     for (const group of grouped(hits, { perGroup: PER_GROUP })) {
       const rest = group.hits.filter((h) => !taken.has(h.entry.url) || h.heading);
       if (!rest.length) continue;
-      list.append(section(group.label, group.total > group.hits.length ? `${group.hits.length} of ${group.total}` : null));
+      section(group.label, group.total > group.hits.length ? `${group.hits.length} of ${group.total}` : null);
       for (const { entry, heading } of rest) addRow({ entry }, shown, { heading });
     }
-    if (!best.length && !hits.length) list.append(note(`Nothing found for “${words || query}” here.`));
+    if (!best.length && !hits.length) note(`Nothing found for “${words || query}” here.`);
+    else status.append(el('span', 'sr-only', `${rows.length} result${rows.length === 1 ? '' : 's'}`));
     if (words.trim()) footer(words.trim());
     open(true);
   };
 
-  const ensureIndex = () => {
-    if (entries || failed) return;
-    loadIndex(INDEX).then(
-      (index) => { entries = index.entries || []; render(); },
-      () => { failed = true; render(); },
+  const withTimeout = (url) => fetch(url, AbortSignal.timeout ? { signal: AbortSignal.timeout(INDEX_TIMEOUT) } : {});
+
+  /* `retry`: a failed load is forgotten and tried again - the next focus of
+   * the field; a keystroke after a failure does not hammer the network. */
+  const ensureIndex = (retry = false) => {
+    if (retry && failed && !loading) failed = false;
+    if (entries || failed || loading) return;
+    loading = true;
+    loadIndex(INDEX, { fetchFn: withTimeout }).then(
+      (index) => { loading = false; entries = index.entries || []; render(); },
+      () => { loading = false; failed = true; render(); },
     );
   };
 
@@ -253,7 +290,7 @@ if (box && input && list) {
     document.title = q ? `${q} — Search — abap2UI5` : 'Search — abap2UI5';
   };
 
-  input.addEventListener('focus', () => { ensureIndex(); render(); });
+  input.addEventListener('focus', () => { ensureIndex(true); render(); });
   input.addEventListener('input', () => { ensureIndex(); remember(); render(); });
 
   input.addEventListener('keydown', (e) => {
@@ -261,7 +298,7 @@ if (box && input && list) {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       if (!rows.length) return;
       e.preventDefault();
-      if (list.hidden) open(true);
+      if (panel.hidden) open(true);
       const step = e.key === 'ArrowDown' ? 1 : -1;
       select((active + step + rows.length) % rows.length);
     } else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && row) {
@@ -277,7 +314,7 @@ if (box && input && list) {
       if (e.metaKey || e.ctrlKey) window.open(target.href, '_blank', 'noopener');
       else target.click();
     } else if (e.key === 'Escape') {
-      if (!page && !list.hidden) { e.preventDefault(); open(false); } else if (input.value) { e.preventDefault(); input.value = ''; remember(); render(); }
+      if (!page && !panel.hidden) { e.preventDefault(); open(false); } else if (input.value) { e.preventDefault(); input.value = ''; remember(); render(); }
     }
   });
 
@@ -297,7 +334,7 @@ if (box && input && list) {
     /* A press on a result keeps the focus in the field: Safari does not focus
      * a link it is clicked on, so the list would close under the pointer
      * before the click arrived. */
-    list.addEventListener('pointerdown', (e) => e.preventDefault());
+    panel.addEventListener('pointerdown', (e) => e.preventDefault());
     document.addEventListener('pointerdown', (e) => {
       if (!box.contains(e.target)) open(false);
     });
